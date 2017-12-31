@@ -2,21 +2,17 @@ package testCases;
 
 import static org.testng.Assert.assertNotNull;
 
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Ignore;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-//import org.testng.log4testng.Logger;
 import initAppium.InitADriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
@@ -31,7 +27,7 @@ public class LoginTestCase {
 
 	Log log = LogFactory.getLog(LoginTestCase.class);
 	public InitADriver initDriver;
-	public IOSDriver driver;
+	public IOSDriver<MobileElement> driver;
 	public LoginPage loginPage;
 	public HomePage homePage;
 	public UserPage userPage;
@@ -44,39 +40,31 @@ public class LoginTestCase {
 	public Long eTime;
 	public int winWidth = 0;
 	public int winHeight = 0;
-	StringBuilder sbl = new StringBuilder();
-	public Method[] methods;
-	// public CheckNotifiWindow checkNotiWin;
-	// public Thread check;
-	JavascriptExecutor js = (JavascriptExecutor) driver;
+	public int count;
+	// JavascriptExecutor js = (JavascriptExecutor) driver;
 
 	@BeforeClass
 	public void setUpTest() throws MalformedURLException {
 		this.initDriver = new InitADriver();
 		this.driver = initDriver.setUpAppium();
 		this.loginPage = new LoginPage(driver);
-		this.common = new Common();
 		this.homePage = new HomePage(driver);
-		this.userPage = new UserPage(driver);
 		this.settingPage = new SettingPage(driver);
+		this.userPage = new UserPage(driver);
+		this.common = new Common();
 		sTime = System.currentTimeMillis();
-		methods = this.getClass().getMethods();
-		for (Method meth : methods) {
-			if (meth.getName().startsWith("test")) {
-				log.info(meth.getName());
-			}
-		}
-
+		this.count = 0;
+		// methods = this.getClass().getMethods();
+		// for (Method meth : methods) {
+		// if (meth.getName().startsWith("test")) {
+		// log.info(meth.getName());
+		// }
+		// }
 	}
 
-	@BeforeTest
-	public void beforeTest() throws InterruptedException {
+	@BeforeMethod
+	public void setUp() throws InterruptedException, MalformedURLException {
 		log.info("-----------------------------START!-----------------------------");
-		// sbl.append("var target = UIATarget.localTarget();");
-		// sbl.append("target.setDeviceOrientation(UIA_DEVICE_ORIENTATION_PORTRAIT);");
-		// sbl.append("target.frontMostApp().tabBar().buttons()[3].tap();");
-		// log.info(sbl);
-
 	}
 
 	// @Parameters({ "normalAccount", "normalPassword" }) String normalAccount,
@@ -84,34 +72,15 @@ public class LoginTestCase {
 	// @Ignore
 	@Test
 	public void testNormalLogin() throws InterruptedException {
-
 		log.info("-------------------------start test case  testNormalLogin-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
-		// TimeUnit.SECONDS.sleep(3);
-		// if (driver.findElementById("ic golive") != null) {
-		// log.info("不是登陆页面！");
-		// driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
-		// //
-		// driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
-		// userPage.setting.click();
-		// settingPage.logOut.click();
-		// settingPage.sure.click();
-		// loginPage.otherLogin.click();
-		// } else {
-		// assertNotNull(loginPage.otherLogin, "不是登陆页面！");
-		// loginPage.otherLogin.click();
-		// }
 		if (loginPage.otherLogin != null) {
 			loginPage.otherLogin.click();
 		} else {
-			log.info("fail");
-			return;
+			log.info(" is first login!！");
 		}
-		TimeUnit.SECONDS.sleep(3);
-		// loginPage.otherLogin.click();
-		// winWidth = driver.manage().window().getSize().width;
-		// winHeight = driver.manage().window().getSize().height;
+
 		loginPage.phoneLogin.click();
 		loginPage.changeLogin.click();
 		log.info(winWidth + "--------------   :   --------------" + winHeight);
@@ -125,45 +94,40 @@ public class LoginTestCase {
 		loginPage.chinaCode.click();
 		loginPage.login.click();
 		TimeUnit.SECONDS.sleep(3);
-		// TODO 以下执行速度过慢，需要优化
-		// assertNotNull(driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]"),
-		// "登录失败！");
-		// homePage.startLive.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATabBar[1]/UIAButton[4]")).click();
-		// ;
+
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 		userPage.setting.click();
 		settingPage.logOut.click();
-		assertNotNull(settingPage.sure);
 		settingPage.sure.click();
 		// driver.switchTo().alert().accept();
 		TimeUnit.SECONDS.sleep(3);
+		assertNotNull(loginPage.changeLogin, "登出失败！");
 	}
 
-	@Ignore
+	// @Ignore
 	@Test
 	public void testNoti() throws InterruptedException {
-		log.info("here");
+		log.info("testCase : " + count);
 		TimeUnit.SECONDS.sleep(3);
-		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
-		driver.manage().window().getSize();
-		// js.executeScript(sbl.toString());
-		log.debug("tap");
-		TimeUnit.SECONDS.sleep(3);
+		loginPage.otherLogin.click();
+		loginPage.fbLogin.click();
+		assertNotNull(driver.manage().window(), "断言失败！");
 	}
 
-	@AfterTest
-	public void afterTest() {
-		//TODO 
-		
+	@AfterMethod
+	public void tearDown() throws InterruptedException, MalformedURLException {
+		// TODO
+		log.info("reset appStatues after every testcase ");
+		driver.closeApp();
+		driver.launchApp();
 	}
-	
+
 	@AfterClass
 	public void destory() throws InterruptedException {
-		log.info("-----------------------------END!-----------------------------");
 		initDriver.destory();
+		log.info("-----------------------------END!-----------------------------");
 		eTime = System.currentTimeMillis();
 		log.info("当前测试类" + this.getClass().getName().toString() + "运行时间为：" + (eTime - sTime) / 1000 + "s");
-
 	}
 
 }

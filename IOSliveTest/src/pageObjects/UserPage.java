@@ -5,13 +5,14 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 
 public class UserPage {
 
-	public IOSDriver driver;
+	public IOSDriver<MobileElement> driver;
 
-	public UserPage(IOSDriver driver) {
+	public UserPage(IOSDriver<MobileElement> driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
