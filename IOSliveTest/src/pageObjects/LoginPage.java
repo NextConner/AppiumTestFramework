@@ -2,42 +2,93 @@ package pageObjects;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 
 public class LoginPage {
 
-	public  IOSDriver<MobileElement> driver;
+	public IOSDriver<MobileElement> driver;
+	// public AppiumDriver driver;
 
 	public LoginPage(IOSDriver<MobileElement> driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(xpath=Loc.LIVE_LOGO)
+	@FindBy(xpath = Loc.LIVE_LOGO)
 	public WebElement logo;
-	@FindBy(id=Loc.PHONE_LOGINID)
+	@FindBy(id = Loc.PHONE_LOGINID)
 	public WebElement phoneLogin;
-	@FindBy(xpath=Loc.CHANGE_LOGIN)
+	@FindBy(xpath = Loc.CHANGE_LOGIN)
 	public WebElement changeLogin;
-	@FindBy(id=Loc.COUNTRY_CODEID)
+	@FindBy(id = Loc.COUNTRY_CODEID)
 	public WebElement countryCode;
-	@FindBy(id=Loc.CHINA_CODEID)
+	@FindBy(id = Loc.CHINA_CODEID)
 	public WebElement chinaCode;
-	@FindBy(xpath=Loc.ACCOUNT)
+	@FindBy(xpath = Loc.ACCOUNT)
 	public WebElement acccount;
-	@FindBy(xpath=Loc.PASSWORD)
+	@FindBy(xpath = Loc.PASSWORD)
 	public WebElement password;
-	@FindBy(xpath=Loc.LOGIN)
+	@FindBy(xpath = Loc.LOGIN)
 	public WebElement login;
-	@FindBy(id=Loc.CHOSE_OTHER_LOGIN)
+	@FindBy(id = Loc.CHOSE_OTHER_LOGIN)
 	public WebElement otherLogin;
-	@FindBy(xpath=Loc.QUICK_LOGIN)
-	public WebElement quickLogin; 
-	@FindBy(xpath=Loc.USER_INFO)
+	@FindBy(xpath = Loc.QUICK_LOGIN)
+	public WebElement quickLogin;
+	@FindBy(xpath = Loc.USER_INFO)
 	public WebElement commonUserInfo;
-	@FindBy(id=Loc.FB_LOGINID)
+	@FindBy(id = Loc.LOGIN_BAR)
+	public WebElement loginBar;
+	@FindBy(id = Loc.MORE_LOGINID)
+	public WebElement moreLogin;
+	// fb
+	@FindBy(id = Loc.FB_ID)
 	public WebElement fbLogin;
+	@FindBy(id = Loc.FB_LOGOID)
+	public WebElement fbTitle;
+	@FindBy(xpath = Loc.FB_ACCOUNT)
+	public WebElement fbAccount;
+	@FindBy(xpath = Loc.FB_PASSWORD)
+	public WebElement fbPassword;
+	//TODO 查找不到ui
+	@FindBy(linkText = Loc.FB_LOGINID)
+	public WebElement fbSignIn;
+
+	//tw
+	@FindBy(id = Loc.TW_ID)
+	public WebElement twitterLogin;
+	@FindBy(id = Loc.TW_LOGOID)
+	public WebElement twitterLogo;
+	@FindBy(xpath = Loc.TW_ACCOUNT)
+	public WebElement twitterAccount;
+	@FindBy(xpath = Loc.TW_PASSWORD)
+	public WebElement twitterPassword;
+	@FindBy(id = Loc.REMEMBER)
+	public WebElement rememberMe;
+	@FindBy(id = Loc.TW_LOGINID)
+	public WebElement twitterSignIn;
+
+	// google
+	@FindBy(id = Loc.GOOGLEID)
+	public WebElement googleLogin;
+	@FindBy(id = Loc.GOOGLE_LOGOID)
+	public WebElement googleLogo;
+	@FindBy(id = Loc.GOOGLE_ACCOUNTID)
+	public WebElement googleAccount;
+	@FindBy(id = Loc.GOOGLE_NEXTID)
+	public WebElement nextStep;
+	@FindBy(id = Loc.GOOGLE_PASSWORD)
+	public WebElement googlePassword;
+	@FindBy(id = Loc.GOOGLE_LOGINID)
+	public WebElement googleSignIn;
+
+	/*
+	 * element 模版
+	 * 
+	 * @FindBy( =Loc ) public WebElement ;
+	 */
 }

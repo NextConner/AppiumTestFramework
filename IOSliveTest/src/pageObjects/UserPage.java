@@ -11,7 +11,8 @@ import io.appium.java_client.ios.IOSDriver;
 public class UserPage {
 
 	public IOSDriver<MobileElement> driver;
-
+	//public AppiumDriver driver;
+	
 	public UserPage(IOSDriver<MobileElement> driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);

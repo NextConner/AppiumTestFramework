@@ -2,17 +2,18 @@ package initAppium;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
 
 public class InitADriver {
 
 	public IOSDriver<MobileElement> driver;
-	public WebDriverWait wait;
+	WebDriverWait wait;
 
 	public IOSDriver<MobileElement> setUpAppium() throws MalformedURLException {
 
@@ -29,15 +30,12 @@ public class InitADriver {
 		desiredCapabilities.setCapability("deviceName", "iPhone 6s Plus");
 		desiredCapabilities.setCapability("platformVersion", "9.2");
 		try {
-			if (driver == null) {
-				driver = new IOSDriver<MobileElement>(new URL("http://0.0.0.0:4723/wd/hub"), desiredCapabilities);
-			}else {
-				return driver;
-			}
+			driver = new IOSDriver<MobileElement>(new URL("http://0.0.0.0:4723/wd/hub"), desiredCapabilities);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		wait = new WebDriverWait(driver, 30);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		//wait = new WebDriverWait(driver, 30);
 		return driver;
 	}
 

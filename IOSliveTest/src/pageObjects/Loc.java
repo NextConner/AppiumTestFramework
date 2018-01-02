@@ -13,8 +13,9 @@ public class Loc {
 	static final String INS_LOGINXPID = "ic login ins";
 	static final String INS_LOGINXPXP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[4]";
 	
+	static final String LOGIN_BAR="GLSignUpOrLoginView";
 	static final String DO_LOGIN = "//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]";
-	static final String MORE_LOGIN = "//UIAApplication[1]/UIAWindow[1]/UIAButton[6]";
+	static final String MORE_LOGINID = "More";
 	static final String COUNTRY_CODEID = "+62";
 	static final String CHINA_CODEID = "China / +86";
 	static final String CHINA_CODEXP = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]";
@@ -35,15 +36,15 @@ public class Loc {
 	static final String FB_PASSWORD="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]";
 	static final String FB_LOGINID="Log In";
 	//Twitter
-	static final String TW_LOGINID = "ic login twitter";
-	static final String TW_LOGINXP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]";
-	static final String TWITTER_LOGOID="Twitter";
-	static final String TWITTER_ACCOUNT="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]";
-	static final String TWITTER_PASSWORD="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]";
+	static final String TW_ID = "ic login twitter";
+	static final String TW_XP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]";
+	static final String TW_LOGOID="Twitter";
+	static final String TW_ACCOUNT="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]";
+	static final String TW_PASSWORD="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]";
 	static final String REMEMBER="Remember me";
-	static final String TWITTER_LOGINID="Sign In";
+	static final String TW_LOGINID="Sign In";
 	//Google
-	static final String GOOGLED = "ic login google";
+	static final String GOOGLEID = "ic login google";
 	static final String GOOGLEXP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[7]";
 	static final String GOOGLE_LOGOID="GLive";
 	static final String GOOGLE_ACCOUNTID="Email or phone";

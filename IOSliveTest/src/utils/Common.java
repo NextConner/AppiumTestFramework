@@ -1,10 +1,14 @@
 package utils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 import io.appium.java_client.AppiumDriver;
 import pageObjects.HomePage;
@@ -55,4 +59,26 @@ public class Common {
 		log.info("------------------Tap X"+sX+";Tap Y"+sY+"------------------------");
 		driver.tap(finger, sX,sY, 200);
 	}
+	
+	//复制测试中产生的截图
+	public static void snapshot(TakesScreenshot drivername, String filename){
+	      // this method will take screen shot ,require two parameters ,one is driver name, another is file name
+	    String currentPath = System.getProperty("user.dir"); //get current work folder
+	    System.out.println(currentPath);
+	    File scrFile = drivername.getScreenshotAs(OutputType.FILE);
+	        // Now you can do whatever you need to do with it, for example copy somewhere
+	        try {
+	            System.out.println("save snapshot path is:"+currentPath+filename);
+	            FileUtils.copyFile(scrFile, new File(currentPath+"\\"+filename));
+	        } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            System.out.println("Can't save screenshot");
+	            e.printStackTrace();
+	        } 
+	        finally
+	        {
+	           
+	            System.out.println("screen shot finished");
+	        }
+	  }
 }
