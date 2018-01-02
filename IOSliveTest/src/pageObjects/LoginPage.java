@@ -1,13 +1,13 @@
 package pageObjects;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.pagefactory.iOSFindBy;
 
 public class LoginPage {
 
@@ -54,11 +54,12 @@ public class LoginPage {
 	public WebElement fbAccount;
 	@FindBy(xpath = Loc.FB_PASSWORD)
 	public WebElement fbPassword;
-	//TODO 查找不到ui
-	@FindBy(linkText = Loc.FB_LOGINID)
+	@FindBy(xpath = Loc.FB_LOGINXP)
 	public WebElement fbSignIn;
+	@FindBy(id = Loc.FB_GOONID)
+	public WebElement fbGoOn;
 
-	//tw
+	// tw
 	@FindBy(id = Loc.TW_ID)
 	public WebElement twitterLogin;
 	@FindBy(id = Loc.TW_LOGOID)
@@ -67,10 +68,12 @@ public class LoginPage {
 	public WebElement twitterAccount;
 	@FindBy(xpath = Loc.TW_PASSWORD)
 	public WebElement twitterPassword;
-	@FindBy(id = Loc.REMEMBER)
+	@FindBy(xpath = Loc.REMEMBERXP)
 	public WebElement rememberMe;
-	@FindBy(id = Loc.TW_LOGINID)
+	@FindBy(xpath = Loc.TW_LOGINXP)
 	public WebElement twitterSignIn;
+	@FindBy(xpath = Loc.TW_AUTH)
+	public WebElement twitterAuth;
 
 	// google
 	@FindBy(id = Loc.GOOGLEID)

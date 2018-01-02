@@ -17,7 +17,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/taoge/Downloads/java-client-4.1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/taoge/Downloads/selenium-server-standalone-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/taoge/Downloads/Appium相关/依赖包(可以选择导入)/java-client-4.1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/taoge/Downloads/Appium相关/依赖包(可以选择导入)/selenium-server-standalone-3.2.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

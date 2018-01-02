@@ -5,6 +5,8 @@ import static org.testng.Assert.assertNull;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
@@ -60,13 +62,14 @@ public class LoginTestCase {
 		this.common = new Common();
 		sTime = System.currentTimeMillis();
 		Method[] m = this.getClass().getMethods();
-		log.info("----------------------" + m.length + "------------------------------------");
+		// log.info("----------------------" + m.length +
+		// "------------------------------------");
 		for (Method me : m) {
 			if (me.getName().startsWith("test")) {
 				count++;
 			}
 		}
-		log.info(count + "----------------------------------");
+		// log.info(count + "----------------------------------");
 	}
 
 	@BeforeMethod
@@ -78,11 +81,11 @@ public class LoginTestCase {
 
 	// @Parameters({ "normalAccount", "normalPassword" }) String normalAccount,
 	// String normalPassword
-	// @Ignore
+	@Ignore
 	@Test
 	public void testNormalLogin() throws InterruptedException {
 		// log.info("normalID:" + driver.getSessionId());
-		log.info("-------------------------start test case  testNormalLogin-------------------------");
+		log.info("-------------------------start test case  test Normal Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
 		if (loginPage.quickLogin.getText().length() <= 0) {
@@ -100,8 +103,8 @@ public class LoginTestCase {
 		// password.setValue(normalPassword);
 		account.setValue("13576046405");
 		password.setValue("123456");
-		account=null;
-		password=null;
+		account = null;
+		password = null;
 		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
 		loginPage.chinaCode.click();
 		loginPage.login.click();
@@ -123,10 +126,10 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	// @Ignore
+	@Ignore
 	@Test
 	public void testFBLogin() throws InterruptedException {
-		log.info("-------------------------start test case  testFBLogin-------------------------");
+		log.info("-------------------------start test case  test FB Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
 		if (loginPage.quickLogin.getText().length() <= 0) {
@@ -135,15 +138,35 @@ public class LoginTestCase {
 			log.info(" not first login!！");
 			loginPage.otherLogin.click();
 		}
+
 		loginPage.fbLogin.click();
 		TimeUnit.SECONDS.sleep(5);
 		assertNotNull(loginPage.fbTitle, "未跳转到FB登陆页面");
-		account=driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]");
+		account = driver
+				.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]");
 		account.setValue("1115785160@qq.com");
-		password=driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
+		password = driver.findElementByXPath(
+				"//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
 		password.setValue("zjt3461829");
-		loginPage.fbSignIn.click();
+		// loginPage.fbClick.click();
+		// log.info("ios find");
+
+		// driver.context("WEBVIEW_1140.20");
+		/*
+		 * 解决第三方账号授权登陆的ui获取问题，混合应用范畴
+		 */
+		for (String context : driver.getContextHandles()) {
+			log.info(context);
+			if (!context.contains("NATIVE")) {
+				if (!context.contains("1140")) {
+					driver.context(context);
+					loginPage.fbSignIn.click();
+					loginPage.fbGoOn.click();
+				}
+			}
+		}
 		TimeUnit.SECONDS.sleep(2);
+		driver.context("NATIVE_APP");
 		assertNotNull(homePage.startLive, "fb登录失败！");
 	}
 
@@ -155,7 +178,7 @@ public class LoginTestCase {
 	// @Ignore
 	@Test
 	public void testTwitterLogin() throws InterruptedException {
-		log.info("-------------------------start test case  testtwitterLogin-------------------------");
+		log.info("-------------------------start test case  test Twitter Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
 		if (loginPage.quickLogin.getText().length() <= 0) {
@@ -166,15 +189,18 @@ public class LoginTestCase {
 		}
 		loginPage.twitterLogin.click();
 		assertNotNull(loginPage.twitterLogo, "未跳转到Twitter登陆页面");
-		account=driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]");
+		account = driver
+				.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]");
 		account.setValue("m13576046405@163.com");
-		password=driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
+		password = driver.findElementByXPath(
+				"//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
 		password.setValue("zjt3461829");
-		account=null;
-		password=null;
-		loginPage.rememberMe.click();
 		loginPage.twitterSignIn.click();
+		if (null != loginPage.twitterAuth) {
+			loginPage.twitterAuth.click();
+		}
 		TimeUnit.SECONDS.sleep(3);
+		driver.context("NATIVE_APP");
 		assertNotNull(homePage.startLive, "twitter登录失败！");
 	}
 
@@ -183,10 +209,10 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	// @Ignore
+	@Ignore
 	@Test
 	public void testGoogleLogin() throws InterruptedException {
-		log.info("-------------------------start test case  testGoogleLogin-------------------------");
+		log.info("-------------------------start test case  test Google Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
 		if (loginPage.quickLogin.getText().length() <= 0) {

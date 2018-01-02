@@ -35,14 +35,18 @@ public class Loc {
 	static final String FB_ACCOUNT="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]";
 	static final String FB_PASSWORD="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]";
 	static final String FB_LOGINID="Log In";
+	static final String FB_LOGINXP="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]";
+	static final String FB_GOONID="继续";
 	//Twitter
 	static final String TW_ID = "ic login twitter";
 	static final String TW_XP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]";
 	static final String TW_LOGOID="Twitter";
 	static final String TW_ACCOUNT="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]";
 	static final String TW_PASSWORD="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]";
-	static final String REMEMBER="Remember me";
+	static final String REMEMBERXP="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASwitch[1]";
 	static final String TW_LOGINID="Sign In";
+	static final String TW_LOGINXP="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]";
+	static final String TW_AUTH="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]";
 	//Google
 	static final String GOOGLEID = "ic login google";
 	static final String GOOGLEXP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[7]";
