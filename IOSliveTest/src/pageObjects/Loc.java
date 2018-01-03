@@ -51,7 +51,7 @@ public class Loc {
 	static final String GOOGLEID = "ic login google";
 	static final String GOOGLEXP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[7]";
 	static final String GOOGLE_LOGOID="GLive";
-	static final String GOOGLE_ACCOUNTID="Email or phone";
+	static final String GOOGLE_ACCOUNT="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]";
 	static final String GOOGLE_NEXTID="NEXT";
 	static final String GOOGLE_PASSWORD="Enter your password";
 	static final String GOOGLE_LOGINID="NEXT";

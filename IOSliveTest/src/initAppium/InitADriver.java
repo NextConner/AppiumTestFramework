@@ -30,7 +30,7 @@ public class InitADriver {
 		desiredCapabilities.setCapability("deviceName", "iPhone 6s Plus");
 		desiredCapabilities.setCapability("platformVersion", "9.2");
 		try {
-			driver = new IOSDriver<MobileElement>(new URL("http://0.0.0.0:4723/wd/hub"), desiredCapabilities);
+			driver = new IOSDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

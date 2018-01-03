@@ -175,7 +175,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	// @Ignore
+	 @Ignore
 	@Test
 	public void testTwitterLogin() throws InterruptedException {
 		log.info("-------------------------start test case  test Twitter Login-------------------------");
@@ -209,7 +209,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Ignore
+	//@Ignore
 	@Test
 	public void testGoogleLogin() throws InterruptedException {
 		log.info("-------------------------start test case  test Google Login-------------------------");
@@ -224,12 +224,25 @@ public class LoginTestCase {
 		loginPage.moreLogin.click();
 		loginPage.googleLogin.click();
 		assertNotNull(loginPage.googleLogo, "未跳转到Google登陆页面");
+		for (String context : driver.getContextHandles()) {
+			log.info(context);
+//			if (!context.contains("NATIVE")) {
+//				if (!context.contains("1140")) {
+//					driver.context(context);
+//					loginPage.fbSignIn.click();
+//					loginPage.fbGoOn.click();
+//				}
+//			}
+		}
 		loginPage.googleAccount.click();
 		loginPage.googleAccount.sendKeys("1115785160@qq.com");
 		loginPage.nextStep.click();
-		loginPage.googlePassword.click();
-		loginPage.googlePassword.sendKeys("zjt3461829");
-		loginPage.googleSignIn.click();
+		loginPage.googleAccount.click();
+		loginPage.googleAccount.sendKeys("1115785160@qq.com");
+		loginPage.nextStep.click();
+//		loginPage.googlePassword.click();
+//		loginPage.googlePassword.sendKeys("zjt3461829");
+//		loginPage.googleSignIn.click();
 		TimeUnit.SECONDS.sleep(3);
 		assertNotNull(homePage.startLive, "twitter登录失败！");
 	}
