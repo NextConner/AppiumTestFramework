@@ -1,22 +1,26 @@
 package testCases;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Ignore;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import initAppium.InitADriver;
@@ -75,16 +79,19 @@ public class LoginTestCase {
 	@BeforeMethod
 	public void setUp() throws InterruptedException, MalformedURLException {
 		log.info("-----------------------------START!-----------------------------");
+		// int temp = count;
 		count--;
+		// if (temp == count++) {
 		TimeUnit.SECONDS.sleep(2);
+		// TODO 在每条测试用例执行之前保证测试环境的一致性,建议使用reset 设置，需要增加首次进入应用允许通知弹窗
+		// driver.switchTo().alert().accept();
+		// }
 	}
 
-	// @Parameters({ "normalAccount", "normalPassword" }) String normalAccount,
-	// String normalPassword
-	@Ignore
+	//@Ignore
+	@Parameters({ "normalAccount", "normalPassword" })
 	@Test
-	public void testNormalLogin() throws InterruptedException {
-		// log.info("normalID:" + driver.getSessionId());
+	public void testNormalLogin(String normalAccount, String normalPassword) throws InterruptedException {
 		log.info("-------------------------start test case  test Normal Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
@@ -99,26 +106,220 @@ public class LoginTestCase {
 		log.info(winWidth + "--------------   :   --------------" + winHeight);
 		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
 		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
-		// account.setValue(normalAccount);
-		// password.setValue(normalPassword);
-		account.setValue("13576046405");
-		password.setValue("123456");
+		account.setValue(normalAccount);
+		password.setValue(normalPassword);
 		account = null;
 		password = null;
 		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
 		loginPage.chinaCode.click();
 		loginPage.login.click();
-		wait = new WebDriverWait(driver, 3);
-		common.snapshot(driver, ".jpg");
-		log.info("截图");
+		// log.info("截图");
+		TimeUnit.SECONDS.sleep(5);
 		assertNull(loginPage.loginBar, "登录失败！");
-		// driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
+		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 		userPage.setting.click();
 		settingPage.logOut.click();
 		settingPage.sure.click();
 		// driver.switchTo().alert().accept();
 		TimeUnit.SECONDS.sleep(3);
 		assertNotNull(loginPage.changeLogin, "登出失败！");
+	}
+
+	/**
+	 * 测试异常登陆场景
+	 * 
+	 * @throws InterruptedException
+	 */
+	//@Ignore
+	@Parameters({ "nullAccount", "normalPassword" })
+	@Test
+	public void testNullAccount(String nullAccount, String normalPassword) throws InterruptedException {
+		log.info("-------------------------start test case  test nullAccount Login-------------------------");
+		winWidth = driver.manage().window().getSize().width;
+		winHeight = driver.manage().window().getSize().height;
+		if (loginPage.quickLogin.getText().length() <= 0) {
+			log.info(" is first login!！");
+		} else {
+			log.info(" not first login!！");
+			loginPage.otherLogin.click();
+		}
+		loginPage.phoneLogin.click();
+		loginPage.changeLogin.click();
+		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
+		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
+		account.setValue(nullAccount);
+		password.setValue(normalPassword);
+		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
+		
+		loginPage.chinaCode.click();
+		loginPage.login.click();
+		TimeUnit.SECONDS.sleep(2);
+		assertNotNull(loginPage.loginBar, "断言失败！");
+	}
+
+	//@Ignore
+	@Parameters({ "wrongAccount", "normalPassword" })
+	@Test
+	public void testWrongAccount(String wrongAccount, String normalPassword) throws InterruptedException {
+		log.info("-------------------------start test case  test WrongAccount Login-------------------------");
+		winWidth = driver.manage().window().getSize().width;
+		winHeight = driver.manage().window().getSize().height;
+		if (loginPage.quickLogin.getText().length() <= 0) {
+			log.info(" is first login!！");
+		} else {
+			log.info(" not first login!！");
+			loginPage.otherLogin.click();
+		}
+		loginPage.phoneLogin.click();
+		loginPage.changeLogin.click();
+		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
+		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
+		account.setValue(wrongAccount);
+		password.setValue(normalPassword);
+		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
+		
+		loginPage.chinaCode.click();
+		loginPage.login.click();
+		TimeUnit.SECONDS.sleep(2);
+		assertNotNull(loginPage.loginBar, "断言失败！");
+	}
+
+	//@Ignore
+	@Parameters({ "unNormalAccount", "normalPassword" })
+	@Test
+	public void testUnNormalAccount(String unNormalAccount, String normalPassword) throws InterruptedException {
+		log.info("-------------------------start test case  test UnNormalAccount Login-------------------------");
+		winWidth = driver.manage().window().getSize().width;
+		winHeight = driver.manage().window().getSize().height;
+		if (loginPage.quickLogin.getText().length() <= 0) {
+			log.info(" is first login!！");
+		} else {
+			log.info(" not first login!！");
+			loginPage.otherLogin.click();
+		}
+		loginPage.phoneLogin.click();
+		loginPage.changeLogin.click();
+		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
+		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
+		account.setValue(unNormalAccount);
+		password.setValue(normalPassword);
+		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
+		loginPage.chinaCode.click();
+		loginPage.login.click();
+		TimeUnit.SECONDS.sleep(2);
+		assertNotNull(loginPage.loginBar, "断言失败！");
+	}
+
+	//@Ignore
+	@Parameters({ "normalAccount", "normalPassword" })
+	@Test
+	public void testErroeCodeAccount(String normalAccount, String normalPassword) throws InterruptedException {
+		log.info("-------------------------start test case  test ErroeCodeAccount Login-------------------------");
+		winWidth = driver.manage().window().getSize().width;
+		winHeight = driver.manage().window().getSize().height;
+		if (loginPage.quickLogin.getText().length() <= 0) {
+			log.info(" is first login!！");
+		} else {
+			log.info(" not first login!！");
+			loginPage.otherLogin.click();
+		}
+		loginPage.phoneLogin.click();
+		loginPage.changeLogin.click();
+		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
+		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
+		account.setValue(normalAccount);
+		password.setValue(normalPassword);
+		loginPage.login.click();
+		TimeUnit.SECONDS.sleep(2);
+		assertNotNull(loginPage.loginBar, "断言失败！");
+	}
+
+	//@Ignore
+	@Parameters({ "normalAccount", "nullPassword" })
+	@Test
+	public void testNullPassword(String normalAccount, String nullPassword) throws InterruptedException {
+		log.info("-------------------------start test case  test NullPassword Login-------------------------");
+		winWidth = driver.manage().window().getSize().width;
+		winHeight = driver.manage().window().getSize().height;
+		if (loginPage.quickLogin.getText().length() <= 0) {
+			log.info(" is first login!！");
+		} else {
+			log.info(" not first login!！");
+			loginPage.otherLogin.click();
+		}
+		loginPage.phoneLogin.click();
+		loginPage.changeLogin.click();
+		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
+		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
+		account.setValue(normalAccount);
+		password.setValue(nullPassword);
+		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
+		loginPage.chinaCode.click();
+		TimeUnit.SECONDS.sleep(1);
+		loginPage.login.click();
+		TimeUnit.SECONDS.sleep(2);
+		assertNotNull(loginPage.loginBar, "断言失败！");
+	}
+
+	//@Ignore
+	@Parameters({ "normalAccount", "wrongPassword" })
+	@Test
+	public void testWrongPassword(String normalAccount, String wrongPassword) throws InterruptedException {
+		log.info("-------------------------start test case  test WrongPassword Login-------------------------");
+		winWidth = driver.manage().window().getSize().width;
+		winHeight = driver.manage().window().getSize().height;
+		if (loginPage.quickLogin.getText().length() <= 0) {
+			log.info(" is first login!！");
+		} else {
+			log.info(" not first login!！");
+			loginPage.otherLogin.click();
+		}
+		loginPage.phoneLogin.click();
+		loginPage.changeLogin.click();
+		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
+		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
+		account.setValue(normalAccount);
+		password.setValue(wrongPassword);
+		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
+		loginPage.chinaCode.click();
+		TimeUnit.SECONDS.sleep(1);
+		loginPage.login.click();
+		TimeUnit.SECONDS.sleep(2);
+		assertNotNull(loginPage.loginBar, "断言失败！");
+	}
+
+	//@Ignore
+	@Parameters({ "normalAccount", "unNormalPassword" })
+	@Test
+	public void testUnNormalPassword(String normalAccount, String unNormalPassword) throws InterruptedException {
+		log.info("-------------------------start test case  test UnNormalPassword Login-------------------------");
+		winWidth = driver.manage().window().getSize().width;
+		winHeight = driver.manage().window().getSize().height;
+		if (loginPage.quickLogin.getText().length() <= 0) {
+			log.info(" is first login!！");
+		} else {
+			log.info(" not first login!！");
+			loginPage.otherLogin.click();
+		}
+		loginPage.phoneLogin.click();
+		loginPage.changeLogin.click();
+		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
+		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
+		account.setValue(normalAccount);
+		password.setValue(unNormalPassword);
+		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
+		loginPage.chinaCode.click();
+		TimeUnit.SECONDS.sleep(1);
+		loginPage.login.click();
+		TimeUnit.SECONDS.sleep(2);
+		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
 	/**
@@ -142,31 +343,35 @@ public class LoginTestCase {
 		loginPage.fbLogin.click();
 		TimeUnit.SECONDS.sleep(5);
 		assertNotNull(loginPage.fbTitle, "未跳转到FB登陆页面");
-		account = driver
-				.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]");
-		account.setValue("1115785160@qq.com");
-		password = driver.findElementByXPath(
-				"//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
-		password.setValue("zjt3461829");
-		// loginPage.fbClick.click();
-		// log.info("ios find");
 
-		// driver.context("WEBVIEW_1140.20");
+		// if (!loginPage.fbSure.getAttribute("name").contains("继续")) {
+		// account = driver.findElementByXPath(
+		// "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]");
+		// account.setValue("1115785160@qq.com");
+		// password = driver.findElementByXPath(
+		// "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
+		// password.setValue("zjt3461829");
+		// loginPage.fbSignIn.click();
+		// loginPage.fbGoOn.click();
+		// } else {
+		// loginPage.fbGoOn.click();
+		// }
 		/*
 		 * 解决第三方账号授权登陆的ui获取问题，混合应用范畴
 		 */
+		List<String> list = new ArrayList<String>();
 		for (String context : driver.getContextHandles()) {
-			log.info(context);
-			if (!context.contains("NATIVE")) {
-				if (!context.contains("1140")) {
-					driver.context(context);
-					loginPage.fbSignIn.click();
-					loginPage.fbGoOn.click();
-				}
-			}
+			list.add(context);
+			// log.info(context);
 		}
+
+		// log.info("first_________________"+driver.getContext());
+		// driver.context(list.get(1));
+		// driver.context(list.get(2));
+		// log.info("second_________________"+driver.getContext());
+		driver.findElementById("继续").click();
 		TimeUnit.SECONDS.sleep(2);
-		driver.context("NATIVE_APP");
+		// driver.context("NATIVE_APP");
 		assertNotNull(homePage.startLive, "fb登录失败！");
 	}
 
@@ -175,7 +380,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	 @Ignore
+	@Ignore
 	@Test
 	public void testTwitterLogin() throws InterruptedException {
 		log.info("-------------------------start test case  test Twitter Login-------------------------");
@@ -209,7 +414,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	//@Ignore
+	@Ignore
 	@Test
 	public void testGoogleLogin() throws InterruptedException {
 		log.info("-------------------------start test case  test Google Login-------------------------");
@@ -223,26 +428,22 @@ public class LoginTestCase {
 		}
 		loginPage.moreLogin.click();
 		loginPage.googleLogin.click();
+		TimeUnit.SECONDS.sleep(2);
 		assertNotNull(loginPage.googleLogo, "未跳转到Google登陆页面");
-		for (String context : driver.getContextHandles()) {
-			log.info(context);
-//			if (!context.contains("NATIVE")) {
-//				if (!context.contains("1140")) {
-//					driver.context(context);
-//					loginPage.fbSignIn.click();
-//					loginPage.fbGoOn.click();
-//				}
-//			}
+		Set<String> se = driver.getContextHandles();
+		List<String> list = new ArrayList<String>();
+		for (String str : se) {
+			list.add(str);
 		}
-		loginPage.googleAccount.click();
-		loginPage.googleAccount.sendKeys("1115785160@qq.com");
-		loginPage.nextStep.click();
-		loginPage.googleAccount.click();
-		loginPage.googleAccount.sendKeys("1115785160@qq.com");
-		loginPage.nextStep.click();
-//		loginPage.googlePassword.click();
-//		loginPage.googlePassword.sendKeys("zjt3461829");
-//		loginPage.googleSignIn.click();
+		// loginPage.googleAccount.click();
+		// loginPage.googleAccount.sendKeys("1115785160@qq.com");
+		// loginPage.nextStep.click();
+		// loginPage.googleAccount.click();
+		// loginPage.googleAccount.sendKeys("1115785160@qq.com");
+		// loginPage.nextStep.click();
+		// loginPage.googlePassword.click();
+		// loginPage.googlePassword.sendKeys("zjt3461829");
+		// loginPage.googleSignIn.click();
 		TimeUnit.SECONDS.sleep(3);
 		assertNotNull(homePage.startLive, "twitter登录失败！");
 	}

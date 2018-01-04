@@ -31,12 +31,13 @@ public class Loc {
 	static final String FB_XP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[2]";
 	static final String FB_LOGIN_PAGEID="URL";//URL VALUE = facebook.com
 	static final String FB_LOGOID="facebook";
+	static final String FB_SURE="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[2]";
 	static final String FB_DONE="DoneID";
 	static final String FB_ACCOUNT="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]";
 	static final String FB_PASSWORD="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]";
 	static final String FB_LOGINID="Log In";
 	static final String FB_LOGINXP="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]";
-	static final String FB_GOONID="继续";
+	static final String FB_GOON="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]";
 	//Twitter
 	static final String TW_ID = "ic login twitter";
 	static final String TW_XP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[3]";

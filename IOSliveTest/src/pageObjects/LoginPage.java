@@ -54,8 +54,10 @@ public class LoginPage {
 	public WebElement fbPassword;
 	@FindBy(xpath = Loc.FB_LOGINXP)
 	public WebElement fbSignIn;
-	@FindBy(id = Loc.FB_GOONID)
+	@FindBy(xpath = Loc.FB_GOON)
 	public WebElement fbGoOn;
+	@FindBy(xpath=Loc.FB_SURE)
+	public WebElement fbSure;
 
 	// tw
 	@FindBy(id = Loc.TW_ID)

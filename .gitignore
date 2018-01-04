@@ -6,3 +6,5 @@ IOSliveTest\.jpg
 IOSliveTest/.classpath
 .DS_Store
 IOSliveTest/.classpath
+IOSliveTest\[[IOSDriver:  on MAC (26423f09-9e52-47dc-9003-3e396270a300)] -> xpath: /UIAApplication[1]/UIAWindow[1]/UIATextField[1]].jpg
+.DS_Store
