@@ -1,6 +1,5 @@
 package testCases;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
 
@@ -13,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -88,7 +86,7 @@ public class LoginTestCase {
 		// }
 	}
 
-	//@Ignore
+	@Ignore
 	@Parameters({ "normalAccount", "normalPassword" })
 	@Test
 	public void testNormalLogin(String normalAccount, String normalPassword) throws InterruptedException {
@@ -130,7 +128,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	//@Ignore
+	@Ignore
 	@Parameters({ "nullAccount", "normalPassword" })
 	@Test
 	public void testNullAccount(String nullAccount, String normalPassword) throws InterruptedException {
@@ -145,20 +143,20 @@ public class LoginTestCase {
 		}
 		loginPage.phoneLogin.click();
 		loginPage.changeLogin.click();
-		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		// log.info(winWidth + "-------------- : --------------" + winHeight);
 		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
 		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
 		account.setValue(nullAccount);
 		password.setValue(normalPassword);
 		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
-		
+
 		loginPage.chinaCode.click();
 		loginPage.login.click();
 		TimeUnit.SECONDS.sleep(2);
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	//@Ignore
+	@Ignore
 	@Parameters({ "wrongAccount", "normalPassword" })
 	@Test
 	public void testWrongAccount(String wrongAccount, String normalPassword) throws InterruptedException {
@@ -173,20 +171,20 @@ public class LoginTestCase {
 		}
 		loginPage.phoneLogin.click();
 		loginPage.changeLogin.click();
-		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		// log.info(winWidth + "-------------- : --------------" + winHeight);
 		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
 		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
 		account.setValue(wrongAccount);
 		password.setValue(normalPassword);
 		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
-		
+
 		loginPage.chinaCode.click();
 		loginPage.login.click();
 		TimeUnit.SECONDS.sleep(2);
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	//@Ignore
+	@Ignore
 	@Parameters({ "unNormalAccount", "normalPassword" })
 	@Test
 	public void testUnNormalAccount(String unNormalAccount, String normalPassword) throws InterruptedException {
@@ -201,7 +199,7 @@ public class LoginTestCase {
 		}
 		loginPage.phoneLogin.click();
 		loginPage.changeLogin.click();
-		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		// log.info(winWidth + "-------------- : --------------" + winHeight);
 		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
 		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
 		account.setValue(unNormalAccount);
@@ -213,7 +211,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	//@Ignore
+	@Ignore
 	@Parameters({ "normalAccount", "normalPassword" })
 	@Test
 	public void testErroeCodeAccount(String normalAccount, String normalPassword) throws InterruptedException {
@@ -228,7 +226,7 @@ public class LoginTestCase {
 		}
 		loginPage.phoneLogin.click();
 		loginPage.changeLogin.click();
-		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		// log.info(winWidth + "-------------- : --------------" + winHeight);
 		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
 		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
 		account.setValue(normalAccount);
@@ -238,7 +236,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	//@Ignore
+	@Ignore
 	@Parameters({ "normalAccount", "nullPassword" })
 	@Test
 	public void testNullPassword(String normalAccount, String nullPassword) throws InterruptedException {
@@ -253,7 +251,7 @@ public class LoginTestCase {
 		}
 		loginPage.phoneLogin.click();
 		loginPage.changeLogin.click();
-		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		// log.info(winWidth + "-------------- : --------------" + winHeight);
 		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
 		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
 		account.setValue(normalAccount);
@@ -266,7 +264,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	//@Ignore
+	@Ignore
 	@Parameters({ "normalAccount", "wrongPassword" })
 	@Test
 	public void testWrongPassword(String normalAccount, String wrongPassword) throws InterruptedException {
@@ -281,7 +279,7 @@ public class LoginTestCase {
 		}
 		loginPage.phoneLogin.click();
 		loginPage.changeLogin.click();
-		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		// log.info(winWidth + "-------------- : --------------" + winHeight);
 		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
 		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
 		account.setValue(normalAccount);
@@ -294,7 +292,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	//@Ignore
+	@Ignore
 	@Parameters({ "normalAccount", "unNormalPassword" })
 	@Test
 	public void testUnNormalPassword(String normalAccount, String unNormalPassword) throws InterruptedException {
@@ -309,7 +307,7 @@ public class LoginTestCase {
 		}
 		loginPage.phoneLogin.click();
 		loginPage.changeLogin.click();
-		//log.info(winWidth + "--------------   :   --------------" + winHeight);
+		// log.info(winWidth + "-------------- : --------------" + winHeight);
 		account = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
 		password = (MobileElement) driver.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
 		account.setValue(normalAccount);
@@ -327,7 +325,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Ignore
+	// @Ignore
 	@Test
 	public void testFBLogin() throws InterruptedException {
 		log.info("-------------------------start test case  test FB Login-------------------------");
@@ -343,35 +341,32 @@ public class LoginTestCase {
 		loginPage.fbLogin.click();
 		TimeUnit.SECONDS.sleep(5);
 		assertNotNull(loginPage.fbTitle, "未跳转到FB登陆页面");
-
-		// if (!loginPage.fbSure.getAttribute("name").contains("继续")) {
-		// account = driver.findElementByXPath(
-		// "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]");
-		// account.setValue("1115785160@qq.com");
-		// password = driver.findElementByXPath(
-		// "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
-		// password.setValue("zjt3461829");
-		// loginPage.fbSignIn.click();
-		// loginPage.fbGoOn.click();
-		// } else {
-		// loginPage.fbGoOn.click();
-		// }
+		List<MobileElement> li=new ArrayList<MobileElement>();
+		if (loginPage.fbTitle.getAttribute("name").contains("facebook")) {
+			account = driver.findElementByXPath(
+					"//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]");
+			account.setValue("1115785160@qq.com");
+			password = driver.findElementByXPath(
+					"//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
+			password.setValue("zjt3461829");
+			loginPage.fbSignIn.click();
+			loginPage.fbGoOn.click();
+		} else {
+			loginPage.fbGoOn.click();
+		}
 		/*
 		 * 解决第三方账号授权登陆的ui获取问题，混合应用范畴
 		 */
-		List<String> list = new ArrayList<String>();
-		for (String context : driver.getContextHandles()) {
-			list.add(context);
-			// log.info(context);
+		li = driver.findElementsByClassName("UIAButton");
+		for (MobileElement mobEl : li) {
+			if (mobEl.getAttribute("name").equals("继续")) {
+				mobEl.click();
+				break;
+			} else {
+				continue;
+			}
 		}
-
-		// log.info("first_________________"+driver.getContext());
-		// driver.context(list.get(1));
-		// driver.context(list.get(2));
-		// log.info("second_________________"+driver.getContext());
-		driver.findElementById("继续").click();
 		TimeUnit.SECONDS.sleep(2);
-		// driver.context("NATIVE_APP");
 		assertNotNull(homePage.startLive, "fb登录失败！");
 	}
 
