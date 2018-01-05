@@ -62,7 +62,9 @@ public class Loc {
 	static final String START_LIVEID = "ic golive";
 	static final String START_LIVEXP = "//UIAApplication[1]/UIAWindow[1]/UIATabBar[1]/UIAButton[1]";
 	static final String SIGN_TITLEID=" title_dialog_checkin";
-	static final String SIGN_ID="Check in";
+	static final String SIGN_CHECKEDID="ic_checkin_check";//判断已签到天数
+	
+	static final String SIGN="//UIAApplication[1]/UIAWindow[1]/UIAButton[1]";//签到按钮
 	static final String SIGN_DAYS="//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1]";//String.subString(0) to get sign day;
 	static final String SIGN_SUREID="Confirm";
 

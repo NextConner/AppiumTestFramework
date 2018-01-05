@@ -1,6 +1,9 @@
 package pageObjects;
 
+import java.util.List;
+
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -22,4 +25,14 @@ public class HomePage {
 	@FindBy(id = Loc.START_LIVEID)
 	public WebElement startLive;
 
+	@FindBy(id = Loc.SIGN_TITLEID)
+	public WebElement signWindow;
+
+	@FindBy(xpath=Loc.SIGN)
+	public WebElement signClick;
+	
+	@FindBy(xpath=Loc.SIGN_DAYS)
+	public WebElement signDay;
+	
+	
 }

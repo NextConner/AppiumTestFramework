@@ -76,13 +76,24 @@ public class LoginTestCase {
 	}
 
 	@BeforeMethod
-	public void setUp() throws InterruptedException, MalformedURLException {
-		log.info("-----------------------------START!-----------------------------");
+	public void setUp(Method method) throws InterruptedException, MalformedURLException {
+		log.info("-----------------------------setUp!-----------------------------");
 		count--;
 		TimeUnit.SECONDS.sleep(2);
-		// TODO 在每条测试用例执行之前保证测试环境的一致性,建议使用reset 设置，需要增加首次进入应用允许通知弹窗
-		// driver.switchTo().alert().accept();
-		// }
+		log.info("-----------------------------START!-----------------------------");
+		// TODO 在每条测试用例执行之前保证测试环境的一致性,建议使用reset 设置
+		// 判断首次进入应用的通知权限弹窗
+		WebElement we = driver.findElementById("OK");
+		if (we != null && we.getAttribute("name").equals("OK")) {
+			we.click();
+		} else {
+			log.info("非首次打开应用，没有弹窗");
+		}
+		if (method.getName().contains("Login")) {
+			ifExistSign();
+		}else {
+			log.info("非登录方法！");
+		}
 	}
 
 	@Ignore
@@ -110,7 +121,6 @@ public class LoginTestCase {
 		common.tapByXY(driver, winWidth, winHeight, 5, 3, 1);
 		loginPage.chinaCode.click();
 		loginPage.login.click();
-		// log.info("截图");
 		TimeUnit.SECONDS.sleep(5);
 		assertNull(loginPage.loginBar, "登录失败！");
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
@@ -120,6 +130,7 @@ public class LoginTestCase {
 		// driver.switchTo().alert().accept();
 		TimeUnit.SECONDS.sleep(3);
 		assertNotNull(loginPage.changeLogin, "登出失败！");
+		driver.resetApp();
 	}
 
 	/**
@@ -127,7 +138,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Ignore
+	// @Ignore
 	@Parameters({ "nullAccount", "normalPassword" })
 	@Test
 	public void testNullAccount(String nullAccount, String normalPassword) throws InterruptedException {
@@ -155,7 +166,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	@Ignore
+	// @Ignore
 	@Parameters({ "wrongAccount", "normalPassword" })
 	@Test
 	public void testWrongAccount(String wrongAccount, String normalPassword) throws InterruptedException {
@@ -183,7 +194,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	@Ignore
+	// @Ignore
 	@Parameters({ "unNormalAccount", "normalPassword" })
 	@Test
 	public void testUnNormalAccount(String unNormalAccount, String normalPassword) throws InterruptedException {
@@ -210,7 +221,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	@Ignore
+	// @Ignore
 	@Parameters({ "normalAccount", "normalPassword" })
 	@Test
 	public void testErroeCodeAccount(String normalAccount, String normalPassword) throws InterruptedException {
@@ -235,7 +246,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	@Ignore
+	// @Ignore
 	@Parameters({ "normalAccount", "nullPassword" })
 	@Test
 	public void testNullPassword(String normalAccount, String nullPassword) throws InterruptedException {
@@ -263,7 +274,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	@Ignore
+	// @Ignore
 	@Parameters({ "normalAccount", "wrongPassword" })
 	@Test
 	public void testWrongPassword(String normalAccount, String wrongPassword) throws InterruptedException {
@@ -291,7 +302,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	@Ignore
+	// @Ignore
 	@Parameters({ "normalAccount", "unNormalPassword" })
 	@Test
 	public void testUnNormalPassword(String normalAccount, String unNormalPassword) throws InterruptedException {
@@ -353,6 +364,15 @@ public class LoginTestCase {
 			for (MobileElement mobEl : li) {
 				if (mobEl.getAttribute("name").equals("继续")) {
 					mobEl.click();
+					TimeUnit.SECONDS.sleep(4);
+					driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
+					userPage.setting.click();
+					settingPage.logOut.click();
+					settingPage.sure.click();
+					// driver.switchTo().alert().accept();
+					TimeUnit.SECONDS.sleep(3);
+					assertNotNull(loginPage.changeLogin, "登出失败！");
+					driver.resetApp();
 					break;
 				} else {
 					continue;
@@ -374,12 +394,20 @@ public class LoginTestCase {
 					mobEl.click();
 					TimeUnit.SECONDS.sleep(4);
 					assertNotNull(homePage.startLive, "fb登录失败！");
+					driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
+					userPage.setting.click();
+					settingPage.logOut.click();
+					settingPage.sure.click();
+					// driver.switchTo().alert().accept();
+					TimeUnit.SECONDS.sleep(3);
+					assertNotNull(loginPage.changeLogin, "登出失败！");
+					driver.resetApp();
 					break;
 				} else {
-					log.info("未知错误");
+					log.info("不是这个ui");
 				}
 			}
-		}	
+		}
 	}
 
 	/**
@@ -387,7 +415,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	@Ignore
+	// @Ignore
 	@Test
 	public void testTwitterLogin() throws InterruptedException {
 		log.info("-------------------------start test case  test Twitter Login-------------------------");
@@ -408,12 +436,16 @@ public class LoginTestCase {
 				"//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
 		password.setValue("zjt3461829");
 		loginPage.twitterSignIn.click();
-		if (null != loginPage.twitterAuth) {
-			loginPage.twitterAuth.click();
-		}
-		TimeUnit.SECONDS.sleep(3);
-		driver.context("NATIVE_APP");
+		TimeUnit.SECONDS.sleep(5);
 		assertNotNull(homePage.startLive, "twitter登录失败！");
+		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
+		userPage.setting.click();
+		settingPage.logOut.click();
+		settingPage.sure.click();
+		// driver.switchTo().alert().accept();
+		TimeUnit.SECONDS.sleep(3);
+		assertNotNull(loginPage.changeLogin, "登出失败！");
+		driver.resetApp();
 	}
 
 	/**
@@ -455,14 +487,37 @@ public class LoginTestCase {
 		assertNotNull(homePage.startLive, "twitter登录失败！");
 	}
 
+	// @Test
+	public void ifExistSign() {
+		WebElement we = driver.findElementById("Check in");
+		if (we.getAttribute("name") != null) {
+			log.info("有签到弹窗！");
+			// int signDays=driver.findElementsById("ic_checkin_check").size();
+			homePage.signClick.click();
+			String day = homePage.signDay.getAttribute("name");
+			if (day.equals("Day 3") || day.equals("Day 5") || day.equals("Day 7")) {
+				homePage.signClick.click();
+				homePage.signClick.click();
+				log.info("特殊签到完成！");
+			} else {
+				homePage.signClick.click();
+				log.info("普通签到完成！");
+			}
+		}
+	}
+
 	@AfterMethod
-	public void tearDown() throws InterruptedException, MalformedURLException {
+	public void tearDown(Method method) throws InterruptedException, MalformedURLException {
 		log.info("reset appStatues after every testcase  : count:" + count);
-		driver.closeApp();
-		if (count == 10) {
-			log.info(count + " : 最后一条测试用例，不用再次启动应用！");
-		} else {
+		// driver.resetApp();
+		// driver.closeApp();
+		if (!method.getName().contains("Login")) {
+			log.info(count + " : 非登录方法，仅关闭app");
+			driver.closeApp();
 			driver.launchApp();
+		} else {
+			log.info("登录方法，重置app环境");
+			driver.resetApp();
 		}
 	}
 
