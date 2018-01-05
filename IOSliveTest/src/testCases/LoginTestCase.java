@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -77,9 +78,7 @@ public class LoginTestCase {
 	@BeforeMethod
 	public void setUp() throws InterruptedException, MalformedURLException {
 		log.info("-----------------------------START!-----------------------------");
-		// int temp = count;
 		count--;
-		// if (temp == count++) {
 		TimeUnit.SECONDS.sleep(2);
 		// TODO 在每条测试用例执行之前保证测试环境的一致性,建议使用reset 设置，需要增加首次进入应用允许通知弹窗
 		// driver.switchTo().alert().accept();
@@ -337,12 +336,30 @@ public class LoginTestCase {
 			log.info(" not first login!！");
 			loginPage.otherLogin.click();
 		}
-
 		loginPage.fbLogin.click();
-		TimeUnit.SECONDS.sleep(5);
+		TimeUnit.SECONDS.sleep(4);
 		assertNotNull(loginPage.fbTitle, "未跳转到FB登陆页面");
-		List<MobileElement> li=new ArrayList<MobileElement>();
-		if (loginPage.fbTitle.getAttribute("name").contains("facebook")) {
+		List<MobileElement> li = new ArrayList<MobileElement>();
+		// li = driver.findElementsByClassName("UIAButton");
+		li = driver.findElementsByClassName("UIAStaticText");
+		StringBuilder sbr = new StringBuilder();
+		for (MobileElement mo : li) {
+			sbr.append(mo.getAttribute("name"));
+		}
+		log.info(sbr);
+		if (sbr.toString().contains("确认登录")) {
+			log.info("fb授权界面");
+			li = driver.findElementsByClassName("UIAButton");
+			for (MobileElement mobEl : li) {
+				if (mobEl.getAttribute("name").equals("继续")) {
+					mobEl.click();
+					break;
+				} else {
+					continue;
+				}
+			}
+		} else {
+			log.info("fb登录界面！");
 			account = driver.findElementByXPath(
 					"//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]");
 			account.setValue("1115785160@qq.com");
@@ -350,24 +367,19 @@ public class LoginTestCase {
 					"//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASecureTextField[1]");
 			password.setValue("zjt3461829");
 			loginPage.fbSignIn.click();
-			loginPage.fbGoOn.click();
-		} else {
-			loginPage.fbGoOn.click();
-		}
-		/*
-		 * 解决第三方账号授权登陆的ui获取问题，混合应用范畴
-		 */
-		li = driver.findElementsByClassName("UIAButton");
-		for (MobileElement mobEl : li) {
-			if (mobEl.getAttribute("name").equals("继续")) {
-				mobEl.click();
-				break;
-			} else {
-				continue;
+			TimeUnit.SECONDS.sleep(3);
+			li = driver.findElementsByClassName("UIAButton");
+			for (MobileElement mobEl : li) {
+				if (mobEl.getAttribute("name").equals("继续")) {
+					mobEl.click();
+					TimeUnit.SECONDS.sleep(4);
+					assertNotNull(homePage.startLive, "fb登录失败！");
+					break;
+				} else {
+					log.info("未知错误");
+				}
 			}
-		}
-		TimeUnit.SECONDS.sleep(2);
-		assertNotNull(homePage.startLive, "fb登录失败！");
+		}	
 	}
 
 	/**
@@ -447,7 +459,7 @@ public class LoginTestCase {
 	public void tearDown() throws InterruptedException, MalformedURLException {
 		log.info("reset appStatues after every testcase  : count:" + count);
 		driver.closeApp();
-		if (count == 0) {
+		if (count == 10) {
 			log.info(count + " : 最后一条测试用例，不用再次启动应用！");
 		} else {
 			driver.launchApp();
