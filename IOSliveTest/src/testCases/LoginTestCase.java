@@ -44,7 +44,6 @@ public class LoginTestCase {
 	public SettingPage settingPage;
 	public MobileElement account;
 	public MobileElement password;
-	public MobileElement commonUserInfo;
 	public Common common;
 	public Long sTime;
 	public Long eTime;
@@ -52,8 +51,7 @@ public class LoginTestCase {
 	public int winHeight = 0;
 	public int count = 0;
 	public WebDriverWait wait;
-	// JavascriptExecutor js = (JavascriptExecutor) driver;
-
+	
 	@BeforeClass
 	public void setUpTest() throws MalformedURLException {
 		this.initDriver = new InitADriver();
@@ -65,14 +63,12 @@ public class LoginTestCase {
 		this.common = new Common();
 		sTime = System.currentTimeMillis();
 		Method[] m = this.getClass().getMethods();
-		// log.info("----------------------" + m.length +
-		// "------------------------------------");
 		for (Method me : m) {
 			if (me.getName().startsWith("test")) {
 				count++;
 			}
 		}
-		// log.info(count + "----------------------------------");
+		
 	}
 
 	@BeforeMethod
@@ -89,10 +85,17 @@ public class LoginTestCase {
 		} else {
 			log.info("非首次打开应用，没有弹窗");
 		}
+		
 		if (method.getName().contains("Login")) {
 			ifExistSign();
 		}else {
-			log.info("非登录方法！");
+			log.info("非登录方法,不需要判断签到弹窗");
+		}
+		//判断是否存在非预期弹窗
+		if(driver.findElementByClassName("UIAAlert")!=null) {
+			driver.switchTo().alert().accept();
+		}else {
+			log.info("无弹窗");
 		}
 	}
 

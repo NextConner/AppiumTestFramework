@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
+import location.LocUserPage;
 
 public class UserPage {
 
@@ -18,10 +19,10 @@ public class UserPage {
 		PageFactory.initElements(driver, this);
 	}
 
-	 @FindBy(xpath = Loc.SETTINGXP) 
+	 @FindBy(xpath = LocUserPage.SETTINGXP) 
 	public WebElement setting;
 
-	@FindBys(value = { @FindBy(id = Loc.INFO_EDITID), @FindBy(xpath = Loc.INFO_EDITXP) })
+	@FindBys(value = { @FindBy(id = LocUserPage.INFO_EDITID), @FindBy(xpath = LocUserPage.INFO_EDITXP) })
 	public WebElement infoEdit;
 	
 	

@@ -1,14 +1,12 @@
 package pageObjects;
 
-import java.util.List;
-
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
+import location.LocHomePage;
 
 public class HomePage {
 
@@ -19,19 +17,19 @@ public class HomePage {
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(xpath = Loc.USER_INFO)
-	public WebElement userInfo;
+	// @FindBy(xpath = LocHomePage.USER_INFO)
+	// public WebElement userInfo;
 
-	@FindBy(id = Loc.START_LIVEID)
+	@FindBy(id = LocHomePage.START_LIVEID)
 	public WebElement startLive;
 
-	@FindBy(id = Loc.SIGN_TITLEID)
+	@FindBy(id = LocHomePage.SIGN_TITLEID)
 	public WebElement signWindow;
 
-	@FindBy(xpath=Loc.SIGN)
+	@FindBy(xpath=LocHomePage.SIGN)
 	public WebElement signClick;
 	
-	@FindBy(xpath=Loc.SIGN_DAYS)
+	@FindBy(xpath=LocHomePage.SIGN_DAYS)
 	public WebElement signDay;
 	
 	

@@ -33,16 +33,6 @@ public class Common {
 		return Thread.currentThread().getStackTrace()[1].getMethodName().toString();
 	}
 
-	public void resetStatue(LoginPage login, UserPage user, SettingPage set, HomePage home)
-			throws InterruptedException {
-		doWait(2);
-		log.info("进行登录状态重置操作！");
-		home.userInfo.click();
-		user.setting.click();
-		set.logOut.click();
-		set.sure.click();
-		login.otherLogin.click();
-	}
 
 	public void tapByXY(AppiumDriver driver, int width ,int height,int xtimes,int ytimes,int finger) {
 //		log.info("Tap by relative location!");
