@@ -1,7 +1,6 @@
 package testCases;
 
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -12,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -108,6 +107,7 @@ public class LoginTestCase {
 		TimeUnit.SECONDS.sleep(5);
 		// assertNull(loginPage.loginBar, "登录失败！");
 		// 判断签到弹窗
+
 		common.ifExistSign(driver, homePage);
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 		userPage.setting.click();
@@ -351,7 +351,7 @@ public class LoginTestCase {
 				if (mobEl.getAttribute("name").equals("继续")) {
 					mobEl.click();
 					TimeUnit.SECONDS.sleep(4);
-					//判断弹框
+					// 判断弹框
 					common.isAlert(driver);
 					// 判断签到弹窗
 					common.ifExistSign(driver, homePage);
@@ -362,7 +362,7 @@ public class LoginTestCase {
 					// driver.switchTo().alert().accept();
 					TimeUnit.SECONDS.sleep(3);
 					assertNotNull(loginPage.changeLogin, "登出失败！");
-					
+
 					break;
 				} else {
 					continue;
@@ -383,7 +383,7 @@ public class LoginTestCase {
 				if (mobEl.getAttribute("name").equals("继续")) {
 					mobEl.click();
 					TimeUnit.SECONDS.sleep(3);
-					//判断弹框
+					// 判断弹框
 					common.isAlert(driver);
 					// 判断签到弹窗
 					common.ifExistSign(driver, homePage);
@@ -429,9 +429,9 @@ public class LoginTestCase {
 		password.setValue("zjt3461829");
 		loginPage.twitterSignIn.click();
 		TimeUnit.SECONDS.sleep(5);
-		//判断弹框
+		// 判断弹框
 		common.isAlert(driver);
-		//assertNotNull(homePage.startLive, "twitter登录失败！");
+		// assertNotNull(homePage.startLive, "twitter登录失败！");
 		common.ifExistSign(driver, homePage);
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 		userPage.setting.click();
@@ -484,11 +484,15 @@ public class LoginTestCase {
 	@AfterMethod
 	public void tearDown(Method method) throws InterruptedException, MalformedURLException {
 		count++;
-		//log.info("reset appStatues after every testcase  : count:" + count);
+		// log.info("reset appStatues after every testcase : count:" + count);
 		if (!method.getName().contains("Login")) {
 			log.info(count + " : 非登录方法，仅关闭app");
 			driver.closeApp();
-			driver.launchApp();
+			if (count < 10) {
+				driver.launchApp();
+			} else {
+				log.info("最后一条测试用例，不需要再次启动应用");
+			}
 		} else {
 			log.info("登录方法，重置app环境");
 			driver.resetApp();
@@ -497,8 +501,9 @@ public class LoginTestCase {
 
 	@AfterClass
 	public void destory() throws InterruptedException {
-		driver.resetApp();
-		initDriver.destory();
+		if (driver != null) {
+			driver.quit();
+		}
 		log.info("-----------------------------END!-----------------------------");
 		eTime = System.currentTimeMillis();
 		log.info("当前测试类" + this.getClass().getName().toString() + "运行时间为：" + (eTime - sTime) / 1000 + "s");

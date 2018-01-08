@@ -39,9 +39,4 @@ public class InitADriver {
 		return driver;
 	}
 
-	public void destory() throws InterruptedException {
-		if (driver != null) {
-			driver.quit();
-		}
-	}
 }
