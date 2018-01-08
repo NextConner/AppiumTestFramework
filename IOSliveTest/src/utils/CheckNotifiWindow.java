@@ -18,17 +18,12 @@ public class CheckNotifiWindow implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				if (driver == null) {
-					log.info("driver null");
-					Thread.sleep(5000);
-				} else if (driver == null) {
-					log.info("----------------------判断无弹窗！---------------------------");
-				} else {
-					log.info("----------------------判断有弹窗！---------------------------");
+				if (driver != null && driver.findElementsByClassName("UIAAlert").size()>0) {
 					driver.switchTo().alert().accept();
-					TimeUnit.SECONDS.sleep(3);
-					log.info("Thread InterrputedException");
-					Thread.interrupted();
+					log.info("接受弹窗。");
+				} else {
+					log.info("----------------------判断无弹窗！---------------------------");
+					TimeUnit.SECONDS.sleep(5);
 				}
 			}
 		} catch (InterruptedException e) {
