@@ -35,7 +35,7 @@ public class InitADriver {
 			e.printStackTrace();
 		}
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		//wait = new WebDriverWait(driver, 30);
+		//WebDriverWait wait = new WebDriverWait(driver, 30);
 		return driver;
 	}
 
