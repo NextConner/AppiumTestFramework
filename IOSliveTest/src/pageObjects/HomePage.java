@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
-import location.LocHomePage;
+import location.Loc;
 
 public class HomePage {
 
@@ -17,19 +17,19 @@ public class HomePage {
 		PageFactory.initElements(driver, this);
 	}
 
-	// @FindBy(xpath = LocHomePage.USER_INFO)
+	// @FindBy(xpath = Loc.USER_INFO)
 	// public WebElement userInfo;
 
-	@FindBy(id = LocHomePage.START_LIVEID)
+	@FindBy(id = Loc.START_LIVEID)
 	public WebElement startLive;
 
-	@FindBy(id = LocHomePage.SIGN_TITLEID)
+	@FindBy(id = Loc.SIGN_TITLEID)
 	public WebElement signWindow;
 
-	@FindBy(xpath=LocHomePage.SIGN)
+	@FindBy(xpath=Loc.SIGN)
 	public WebElement signClick;
 	
-	@FindBy(xpath=LocHomePage.SIGN_DAYS)
+	@FindBy(xpath=Loc.SIGN_DAYS)
 	public WebElement signDay;
 	
 	

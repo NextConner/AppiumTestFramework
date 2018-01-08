@@ -51,7 +51,7 @@ public class LoginTestCase {
 	public int winHeight = 0;
 	public int count = 0;
 	public WebDriverWait wait;
-	
+
 	@BeforeClass
 	public void setUpTest() throws MalformedURLException {
 		this.initDriver = new InitADriver();
@@ -62,44 +62,25 @@ public class LoginTestCase {
 		this.userPage = new UserPage(driver);
 		this.common = new Common();
 		sTime = System.currentTimeMillis();
-		Method[] m = this.getClass().getMethods();
-		for (Method me : m) {
-			if (me.getName().startsWith("test")) {
-				count++;
-			}
-		}
-		
+		// Method[] m = this.getClass().getMethods();
+		// for (Method me : m) {
+		// if (me.getName().startsWith("test")) {
+		// count++;
+		// }
+		// }
+
 	}
 
 	@BeforeMethod
-	public void setUp(Method method) throws InterruptedException, MalformedURLException {
-		log.info("-----------------------------setUp!-----------------------------");
-		count--;
-		TimeUnit.SECONDS.sleep(2);
+	public void setUp() throws InterruptedException, MalformedURLException {
 		log.info("-----------------------------START!-----------------------------");
 		// TODO 在每条测试用例执行之前保证测试环境的一致性,建议使用reset 设置
-		// 判断首次进入应用的通知权限弹窗
-		WebElement we = driver.findElementById("OK");
-		if (we != null && we.getAttribute("name").equals("OK")) {
-			we.click();
-		} else {
-			log.info("非首次打开应用，没有弹窗");
-		}
-		
-		if (method.getName().contains("Login")) {
-			ifExistSign();
-		}else {
-			log.info("非登录方法,不需要判断签到弹窗");
-		}
-		//判断是否存在非预期弹窗
-		if(driver.findElementByClassName("UIAAlert")!=null) {
-			driver.switchTo().alert().accept();
-		}else {
-			log.info("无弹窗");
+		if (count == 0) {
+			common.isAlert(driver);
 		}
 	}
 
-	@Ignore
+	// @Ignore
 	@Parameters({ "normalAccount", "normalPassword" })
 	@Test
 	public void testNormalLogin(String normalAccount, String normalPassword) throws InterruptedException {
@@ -125,7 +106,9 @@ public class LoginTestCase {
 		loginPage.chinaCode.click();
 		loginPage.login.click();
 		TimeUnit.SECONDS.sleep(5);
-		assertNull(loginPage.loginBar, "登录失败！");
+		// assertNull(loginPage.loginBar, "登录失败！");
+		// 判断签到弹窗
+		common.ifExistSign(driver, homePage);
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 		userPage.setting.click();
 		settingPage.logOut.click();
@@ -368,6 +351,10 @@ public class LoginTestCase {
 				if (mobEl.getAttribute("name").equals("继续")) {
 					mobEl.click();
 					TimeUnit.SECONDS.sleep(4);
+					//判断弹框
+					common.isAlert(driver);
+					// 判断签到弹窗
+					common.ifExistSign(driver, homePage);
 					driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 					userPage.setting.click();
 					settingPage.logOut.click();
@@ -375,7 +362,7 @@ public class LoginTestCase {
 					// driver.switchTo().alert().accept();
 					TimeUnit.SECONDS.sleep(3);
 					assertNotNull(loginPage.changeLogin, "登出失败！");
-					driver.resetApp();
+					
 					break;
 				} else {
 					continue;
@@ -395,8 +382,11 @@ public class LoginTestCase {
 			for (MobileElement mobEl : li) {
 				if (mobEl.getAttribute("name").equals("继续")) {
 					mobEl.click();
-					TimeUnit.SECONDS.sleep(4);
-					assertNotNull(homePage.startLive, "fb登录失败！");
+					TimeUnit.SECONDS.sleep(3);
+					//判断弹框
+					common.isAlert(driver);
+					// 判断签到弹窗
+					common.ifExistSign(driver, homePage);
 					driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 					userPage.setting.click();
 					settingPage.logOut.click();
@@ -404,7 +394,6 @@ public class LoginTestCase {
 					// driver.switchTo().alert().accept();
 					TimeUnit.SECONDS.sleep(3);
 					assertNotNull(loginPage.changeLogin, "登出失败！");
-					driver.resetApp();
 					break;
 				} else {
 					log.info("不是这个ui");
@@ -424,7 +413,7 @@ public class LoginTestCase {
 		log.info("-------------------------start test case  test Twitter Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
-		if (loginPage.quickLogin.getText().length() <= 0) {
+		if (loginPage.quickLogin.getText().trim().length() <= 0) {
 			log.info(" is first login!！");
 		} else {
 			log.info(" not first login!！");
@@ -440,7 +429,10 @@ public class LoginTestCase {
 		password.setValue("zjt3461829");
 		loginPage.twitterSignIn.click();
 		TimeUnit.SECONDS.sleep(5);
-		assertNotNull(homePage.startLive, "twitter登录失败！");
+		//判断弹框
+		common.isAlert(driver);
+		//assertNotNull(homePage.startLive, "twitter登录失败！");
+		common.ifExistSign(driver, homePage);
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 		userPage.setting.click();
 		settingPage.logOut.click();
@@ -448,7 +440,6 @@ public class LoginTestCase {
 		// driver.switchTo().alert().accept();
 		TimeUnit.SECONDS.sleep(3);
 		assertNotNull(loginPage.changeLogin, "登出失败！");
-		driver.resetApp();
 	}
 
 	/**
@@ -490,30 +481,10 @@ public class LoginTestCase {
 		assertNotNull(homePage.startLive, "twitter登录失败！");
 	}
 
-	// @Test
-	public void ifExistSign() {
-		WebElement we = driver.findElementById("Check in");
-		if (we.getAttribute("name") != null) {
-			log.info("有签到弹窗！");
-			// int signDays=driver.findElementsById("ic_checkin_check").size();
-			homePage.signClick.click();
-			String day = homePage.signDay.getAttribute("name");
-			if (day.equals("Day 3") || day.equals("Day 5") || day.equals("Day 7")) {
-				homePage.signClick.click();
-				homePage.signClick.click();
-				log.info("特殊签到完成！");
-			} else {
-				homePage.signClick.click();
-				log.info("普通签到完成！");
-			}
-		}
-	}
-
 	@AfterMethod
 	public void tearDown(Method method) throws InterruptedException, MalformedURLException {
-		log.info("reset appStatues after every testcase  : count:" + count);
-		// driver.resetApp();
-		// driver.closeApp();
+		count++;
+		//log.info("reset appStatues after every testcase  : count:" + count);
 		if (!method.getName().contains("Login")) {
 			log.info(count + " : 非登录方法，仅关闭app");
 			driver.closeApp();
@@ -526,6 +497,7 @@ public class LoginTestCase {
 
 	@AfterClass
 	public void destory() throws InterruptedException {
+		driver.resetApp();
 		initDriver.destory();
 		log.info("-----------------------------END!-----------------------------");
 		eTime = System.currentTimeMillis();

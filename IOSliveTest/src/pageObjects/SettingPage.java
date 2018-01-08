@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
-import location.LocSettingPage;
+import location.Loc;
 
 public class SettingPage {
 
@@ -17,13 +17,13 @@ public class SettingPage {
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(xpath=LocSettingPage.LOG_OUT)
+	@FindBy(xpath=Loc.LOG_OUT)
 	public WebElement logOut;
 	
-	@FindBy(xpath=LocSettingPage.SURE)
+	@FindBy(xpath=Loc.SURE)
 	public WebElement sure;
 
-	@FindBy(xpath=LocSettingPage.CANCLE)
+	@FindBy(xpath=Loc.CANCLE)
 	public WebElement cancle;
 
 

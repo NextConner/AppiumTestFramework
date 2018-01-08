@@ -6,8 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
-import location.LocHomePage;
-import location.LocLoginPage;
+import location.Loc;
 
 public class LoginPage {
 
@@ -18,81 +17,81 @@ public class LoginPage {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
-	@FindBy(xpath = LocLoginPage.LIVE_LOGO)
+	@FindBy(xpath = Loc.LIVE_LOGO)
 	public WebElement logo;
-	@FindBy(id = LocLoginPage.PHONE_LOGINID)
+	@FindBy(id = Loc.PHONE_LOGINID)
 	public WebElement phoneLogin;
-	@FindBy(xpath = LocLoginPage.CHANGE_LOGIN)
+	@FindBy(xpath = Loc.CHANGE_LOGIN)
 	public WebElement changeLogin;
-	@FindBy(id = LocLoginPage.COUNTRY_CODEID)
+	@FindBy(id = Loc.COUNTRY_CODEID)
 	public WebElement countryCode;
-	@FindBy(id = LocLoginPage.CHINA_CODEID)
+	@FindBy(id = Loc.CHINA_CODEID)
 	public WebElement chinaCode;
-	@FindBy(xpath = LocLoginPage.ACCOUNT)
+	@FindBy(xpath = Loc.ACCOUNT)
 	public WebElement acccount;
-	@FindBy(xpath = LocLoginPage.PASSWORD)
+	@FindBy(xpath = Loc.PASSWORD)
 	public WebElement password;
-	@FindBy(xpath = LocLoginPage.LOGIN)
+	@FindBy(xpath = Loc.LOGIN)
 	public WebElement login;
-	@FindBy(id = LocLoginPage.CHOSE_OTHER_LOGIN)
+	@FindBy(id = Loc.CHOSE_OTHER_LOGIN)
 	public WebElement otherLogin;
-	@FindBy(xpath = LocLoginPage.QUICK_LOGIN)
+	@FindBy(xpath = Loc.QUICK_LOGIN)
 	public WebElement quickLogin;
 	// @FindBy(xpath = LocHomePage.USER_INFO)
 	// public WebElement commonUserInfo;
-	@FindBy(id = LocLoginPage.LOGIN_BAR)
+	@FindBy(id = Loc.LOGIN_BAR)
 	public WebElement loginBar;
-	@FindBy(id = LocLoginPage.MORE_LOGINID)
+	@FindBy(id = Loc.MORE_LOGINID)
 	public WebElement moreLogin;
 	// fb
-	@FindBy(id = LocLoginPage.FB_ID)
+	@FindBy(id = Loc.FB_ID)
 	public WebElement fbLogin;
-	@FindBy(id = LocLoginPage.FB_LOGOID)
+	@FindBy(id = Loc.FB_LOGOID)
 	public WebElement fbTitle;
-	@FindBy(xpath = LocLoginPage.FB_ACCOUNT)
+	@FindBy(xpath = Loc.FB_ACCOUNT)
 	public WebElement fbAccount;
-	@FindBy(xpath = LocLoginPage.FB_PASSWORD)
+	@FindBy(xpath = Loc.FB_PASSWORD)
 	public WebElement fbPassword;
-	@FindBy(xpath = LocLoginPage.FB_LOGINXP)
+	@FindBy(xpath = Loc.FB_LOGINXP)
 	public WebElement fbSignIn;
-	@FindBy(xpath = LocLoginPage.FB_GOON)
+	@FindBy(xpath = Loc.FB_GOON)
 	public WebElement fbGoOn;
-	@FindBy(xpath=LocLoginPage.FB_SURE)
+	@FindBy(xpath=Loc.FB_SURE)
 	public WebElement fbSure;
 
 	// tw
-	@FindBy(id = LocLoginPage.TW_ID)
+	@FindBy(id = Loc.TW_ID)
 	public WebElement twitterLogin;
-	@FindBy(id = LocLoginPage.TW_LOGOID)
+	@FindBy(id = Loc.TW_LOGOID)
 	public WebElement twitterLogo;
-	@FindBy(xpath = LocLoginPage.TW_ACCOUNT)
+	@FindBy(xpath = Loc.TW_ACCOUNT)
 	public WebElement twitterAccount;
-	@FindBy(xpath = LocLoginPage.TW_PASSWORD)
+	@FindBy(xpath = Loc.TW_PASSWORD)
 	public WebElement twitterPassword;
-	@FindBy(xpath = LocLoginPage.REMEMBERXP)
+	@FindBy(xpath = Loc.REMEMBERXP)
 	public WebElement rememberMe;
-	@FindBy(xpath = LocLoginPage.TW_LOGINXP)
+	@FindBy(xpath = Loc.TW_LOGINXP)
 	public WebElement twitterSignIn;
-	@FindBy(xpath = LocLoginPage.TW_AUTH)
+	@FindBy(xpath = Loc.TW_AUTH)
 	public WebElement twitterAuth;
 
 	// google
-	@FindBy(id = LocLoginPage.GOOGLEID)
+	@FindBy(id = Loc.GOOGLEID)
 	public WebElement googleLogin;
-	@FindBy(id = LocLoginPage.GOOGLE_LOGOID)
+	@FindBy(id = Loc.GOOGLE_LOGOID)
 	public WebElement googleLogo;
-	@FindBy(xpath = LocLoginPage.GOOGLE_ACCOUNT)
+	@FindBy(xpath = Loc.GOOGLE_ACCOUNT)
 	public WebElement googleAccount;
-	@FindBy(id = LocLoginPage.GOOGLE_NEXTID)
+	@FindBy(id = Loc.GOOGLE_NEXTID)
 	public WebElement nextStep;
-	@FindBy(id = LocLoginPage.GOOGLE_PASSWORD)
+	@FindBy(id = Loc.GOOGLE_PASSWORD)
 	public WebElement googlePassword;
-	@FindBy(id = LocLoginPage.GOOGLE_LOGINID)
+	@FindBy(id = Loc.GOOGLE_LOGINID)
 	public WebElement googleSignIn;
 
 	/*
 	 * element 模版
 	 * 
-	 * @FindBy( =LocLoginPage ) public WebElement ;
+	 * @FindBy( =Loc ) public WebElement ;
 	 */
 }

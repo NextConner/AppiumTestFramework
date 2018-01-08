@@ -2,6 +2,7 @@ package utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -11,10 +12,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.ios.IOSDriver;
 import pageObjects.HomePage;
-import pageObjects.LoginPage;
-import pageObjects.SettingPage;
-import pageObjects.UserPage;
 
 public class Common {
 
@@ -71,4 +70,36 @@ public class Common {
 	            System.out.println("screen shot finished");
 	        }
 	  }
+	
+	 //判断签到弹窗
+	public void ifExistSign( IOSDriver driver,HomePage homePage) {
+		List we = driver.findElementsById("Check in");
+		if (we.size()>0) {
+			log.info("有签到弹窗！");
+			// int signDays=driver.findElementsById("ic_checkin_check").size();
+			homePage.signClick.click();
+			String day = homePage.signDay.getAttribute("name");
+			if (day.equals("Day 3") || day.equals("Day 5") || day.equals("Day 7")) {
+				homePage.signClick.click();
+				homePage.signClick.click();
+				log.info("特殊签到完成！");
+			} else {
+				homePage.signClick.click();
+				log.info("普通签到完成！");
+			}
+		}else {
+			log.info("无签到弹窗！");
+		}
+	}
+	
+	//判断弹框
+	public void isAlert(IOSDriver driver) {
+		if (driver.findElementsByClassName("UIAAlert").size() == 0) {
+			log.info("无弹窗");
+			return;
+		} else {
+			driver.switchTo().alert().accept();
+		}	
+	}
+	
 }
