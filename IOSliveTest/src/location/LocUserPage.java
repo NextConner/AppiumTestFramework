@@ -27,7 +27,7 @@ public class LocUserPage {
 	public static final String CONTRIBUTE_RANK_ID = "Contribute Rank";
 
 	public static final String EDIT_TITLEID = "Edit";
-	public static final String USER_NAME_CLASS = "UIANavigationBar";
+	public static final String USER_NAME_CLASS = "UIANavigationBar";//get name /get value
 	public static final String EDIT_USERNAME = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]";
 	public static final String EDIT_SEX = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]";
 	public static final String EDIT_BIRTHDAY = "//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[3]";

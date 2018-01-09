@@ -25,5 +25,15 @@ public class UserPage {
 	@FindBys(value = { @FindBy(id = LocUserPage.INFO_EDITID), @FindBy(xpath = LocUserPage.INFO_EDITXP) })
 	public WebElement infoEdit;
 	
+	@FindBy(className=LocUserPage.USER_NAME_CLASS)
+	public WebElement userName;
+	@FindBy(id=LocUserPage.COINS_ID)
+	public WebElement coins;
+	@FindBy(id=LocUserPage.DIAMONDS_ID)
+	public WebElement diamonds;
+	@FindBy(id=LocUserPage.LEVEL_ID)
+	public WebElement level;
+	@FindBy(id=LocUserPage.BROADCAST_LEVEL_ID)
+	public WebElement broadcastLevel;
 	
 }

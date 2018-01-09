@@ -416,7 +416,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	 @Ignore
+	 //@Ignore
 	@Test
 	public void testTwitterLogin() throws InterruptedException {
 		// log.info("-------------------------start test case test Twitter
@@ -521,6 +521,7 @@ public class LoginTestCase {
 	@AfterClass
 	public void destory() throws InterruptedException {
 		if (driver != null) {
+			driver.removeApp("com.gomo.ios.gLive");
 			driver.quit();
 		}
 		log.info("-----------------------------END!-----------------------------");
