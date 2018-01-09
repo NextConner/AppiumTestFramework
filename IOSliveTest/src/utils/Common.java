@@ -72,21 +72,22 @@ public class Common {
 	  }
 	
 	 //判断签到弹窗
-	public void ifExistSign( IOSDriver driver,HomePage homePage) {
+	public void ifExistSign( IOSDriver driver,HomePage homePage) throws InterruptedException {
 		List we = driver.findElementsById("Check in");
 		if (we.size()>0) {
 			log.info("有签到弹窗！");
 			// int signDays=driver.findElementsById("ic_checkin_check").size();
 			homePage.signClick.click();
-			String day = homePage.signDay.getAttribute("name");
-			if (day.equals("Day 3") || day.equals("Day 5") || day.equals("Day 7")) {
-				homePage.signClick.click();
-				homePage.signClick.click();
-				log.info("特殊签到完成！");
-			} else {
-				homePage.signClick.click();
-				log.info("普通签到完成！");
-			}
+			TimeUnit.SECONDS.sleep(3);
+			// String day = homePage.signDay.getAttribute("name");
+			// if (day.equals("Day 3") || day.equals("Day 5") || day.equals("Day 7")) {
+			// homePage.signClick.click();
+			// homePage.signClick.click();
+			// log.info("特殊签到完成！");
+			// } else {
+			// homePage.signClick.click();
+			// log.info("普通签到完成！");
+			// }
 		}else {
 			log.info("无签到弹窗！");
 		}

@@ -1,17 +1,14 @@
 package utils;
 
 import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openqa.selenium.By;
-
-import io.appium.java_client.AppiumDriver;
-import testCases.LoginTestCase;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.ios.IOSDriver;
 
 public class CheckNotifiWindow implements Runnable {
 
-	public AppiumDriver driver;
+	public IOSDriver<MobileElement> driver;
 	Log log = LogFactory.getLog(CheckNotifiWindow.class);
 
 	@Override
@@ -31,7 +28,7 @@ public class CheckNotifiWindow implements Runnable {
 		}
 	}
 
-	public CheckNotifiWindow(AppiumDriver driver) {
+	public CheckNotifiWindow(IOSDriver<MobileElement> driver) {
 		this.driver = driver;
 	}
 

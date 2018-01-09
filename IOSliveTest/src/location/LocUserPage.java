@@ -15,4 +15,6 @@ public class LocUserPage {
 	public static final String BROADCAST_LEVEL_ID="Broadcast Level";//主播等级
 	public static final String CONTRIBUTE_RANK_ID="Contribute Rank";
 	
+	public static final String USER_NAME_CLASS="UIANavigationBar";
+	
 }

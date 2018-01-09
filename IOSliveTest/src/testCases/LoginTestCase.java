@@ -28,6 +28,7 @@ import pageObjects.HomePage;
 import pageObjects.LoginPage;
 import pageObjects.SettingPage;
 import pageObjects.UserPage;
+import utils.CheckNotifiWindow;
 import utils.Common;
 
 @Test
@@ -67,16 +68,21 @@ public class LoginTestCase {
 		// count++;
 		// }
 		// }
-
+		//使用后台线程查找非预期弹窗代替硬等待
+		// CheckNotifiWindow chk=new CheckNotifiWindow(driver);
+		// Thread t=new Thread(chk);
+		// t.setDaemon(true);
+		// log.info("启动后台线程");
+		// t.start();
 	}
 
 	@BeforeMethod
 	public void setUp() throws InterruptedException, MalformedURLException {
 		log.info("-----------------------------START!-----------------------------");
 		// TODO 在每条测试用例执行之前保证测试环境的一致性,建议使用reset 设置
-		if (count == 0) {
-			common.isAlert(driver);
-		}
+		 if (count == 0) {
+		 common.isAlert(driver);
+		 }
 	}
 
 	// @Ignore
@@ -264,7 +270,8 @@ public class LoginTestCase {
 	@Parameters({ "normalAccount", "wrongPassword" })
 	@Test
 	public void testWrongPassword(String normalAccount, String wrongPassword) throws InterruptedException {
-		log.info("-------------------------start test case  test WrongPassword Login-------------------------");
+		// log.info("-------------------------start test case test WrongPassword
+		// Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
 		if (loginPage.quickLogin.getText().length() <= 0) {
@@ -292,7 +299,8 @@ public class LoginTestCase {
 	@Parameters({ "normalAccount", "unNormalPassword" })
 	@Test
 	public void testUnNormalPassword(String normalAccount, String unNormalPassword) throws InterruptedException {
-		log.info("-------------------------start test case  test UnNormalPassword Login-------------------------");
+		// log.info("-------------------------start test case test UnNormalPassword
+		// Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
 		if (loginPage.quickLogin.getText().length() <= 0) {
@@ -324,7 +332,8 @@ public class LoginTestCase {
 	// @Ignore
 	@Test
 	public void testFBLogin() throws InterruptedException {
-		log.info("-------------------------start test case  test FB Login-------------------------");
+		// log.info("-------------------------start test case test FB
+		// Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
 		if (loginPage.quickLogin.getText().length() <= 0) {
@@ -396,7 +405,7 @@ public class LoginTestCase {
 					assertNotNull(loginPage.changeLogin, "登出失败！");
 					break;
 				} else {
-					log.info("不是这个ui");
+					log.info("continue!");
 				}
 			}
 		}
@@ -407,10 +416,11 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	// @Ignore
+	 @Ignore
 	@Test
 	public void testTwitterLogin() throws InterruptedException {
-		log.info("-------------------------start test case  test Twitter Login-------------------------");
+		// log.info("-------------------------start test case test Twitter
+		// Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
 		if (loginPage.quickLogin.getText().trim().length() <= 0) {
@@ -432,7 +442,16 @@ public class LoginTestCase {
 		// 判断弹框
 		common.isAlert(driver);
 		// assertNotNull(homePage.startLive, "twitter登录失败！");
-		common.ifExistSign(driver, homePage);
+		// common.ifExistSign(driver, homePage);
+		List we = driver.findElementsById("Check in");
+		if (we.size() > 0) {
+			log.info("有签到弹窗！");
+			// int signDays=driver.findElementsById("ic_checkin_check").size();
+			homePage.signClick.click();
+			TimeUnit.SECONDS.sleep(3);
+		} else {
+			log.info("无签到");
+		}
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 		userPage.setting.click();
 		settingPage.logOut.click();
