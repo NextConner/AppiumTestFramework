@@ -1,6 +1,8 @@
 package testCases;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertNotNull;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -42,6 +44,7 @@ public class UserInfoTestCase {
 	public int count = 0;
 	public WebDriverWait wait;
 	String[] sexs = { "Secret", "Female", "Male" };
+	String[] coins = { "$0.99", "$4.99", "$9.99", "$19.90", "$49.90", "$99.90" };
 
 	@BeforeClass
 	public void setUpClass() throws MalformedURLException {
@@ -229,16 +232,17 @@ public class UserInfoTestCase {
 		assertEquals(userPage.nowSex.getAttribute("value").trim(), sexs[i]);
 	}
 
-	// @Test
-	// public void testSwpe() {
-	// for(int i=0;i<20;i++) {
-	// log.info("swipe");
-	// winHeight = driver.manage().window().getSize().getHeight();
-	// driver.swipe(winWidth/2, winHeight*3/4, winWidth/2, winHeight/4, 2000);
-	// log.info("swiped : "+i);
-	// winHeight=0;
-	// }
-	// }
+	@Test
+	public void coinsRecharge() {
+		String coins = userPage.coins.findElements(By.className("UIAStaticText")).get(1).getAttribute("name").trim();
+		log.info("用户金币数 ： " + coins);
+		userPage.coins.click();
+		assertEquals(coins, userPage.pageCoins.getAttribute("name").trim());
+		userPage.rechargeRecord.click();
+		assertNotNull(userPage.recordPage);
+		userPage.back.click();
+	}
+
 	@AfterMethod
 	public void tearDown(Method method) throws InterruptedException {
 

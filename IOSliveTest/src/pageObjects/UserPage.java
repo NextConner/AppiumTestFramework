@@ -32,11 +32,11 @@ public class UserPage {
 	public WebElement editSex;
 	@FindBy(xpath = LocUserPage.EDIT_BIRTHDAY)
 	public WebElement editBirthday;
-	@FindBy(xpath=LocUserPage.BIRTHDAY)
+	@FindBy(xpath = LocUserPage.BIRTHDAY)
 	public WebElement birthday;
 	@FindAll({ @FindBy(className = LocUserPage.BIRTHDAY_PICK_CALSS) })
 	public List<WebElement> birthList;
-	@FindBy(id=LocUserPage.DONE_ID)
+	@FindBy(id = LocUserPage.DONE_ID)
 	public WebElement done;
 	@FindBy(id = LocUserPage.SAVE_INFOID)
 	public WebElement saveInfo;
@@ -44,6 +44,15 @@ public class UserPage {
 	public WebElement userName;
 	@FindBy(id = LocUserPage.COINS_ID)
 	public WebElement coins;
+	@FindBy(xpath = LocUserPage.COIN_PAGES_COIN)
+	public WebElement pageCoins;
+	@FindBy(id = LocUserPage.COINS_RECHARGE_TITLEID)
+	public WebElement recordPage;
+	@FindBy(id = LocUserPage.COINS_RECORDID)
+	public WebElement rechargeRecord;
+	@FindBy(id=LocUserPage.BACK_ID)
+	public WebElement back;
+	
 	@FindBy(id = LocUserPage.DIAMONDS_ID)
 	public WebElement diamonds;
 	@FindBy(id = LocUserPage.LEVEL_ID)

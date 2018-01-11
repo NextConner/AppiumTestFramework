@@ -16,9 +16,12 @@ public class LocUserPage {
 
 	public static final String COINS_ID = "Coins";// 包含金币信息
 	public static final String COINS_CLASS = "UIAStaticText";//value 值为［1］
+	public static final String COIN_PAGES_COIN="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIAStaticText[2]";
 	public static final String COINS_TITLEID = "My Coins";
 	public static final String CONIS_BACKID = "ic back";
 	public static final String COINS_RECORDID = "ic record";
+	public static final String COINS_RECHARGE_TITLEID="Recharge record";
+	
 
 	public static final String DIAMONDS_ID = "Diamonds";// 包含钻石信息
 	public static final String RECHARGE_ID = "Recharge";
