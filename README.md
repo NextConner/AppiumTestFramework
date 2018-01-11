@@ -1,2 +1,2 @@
 # AppiumTestFramework
-java 语言实现appium+testNG测试框架
+java+appium+testNG 实现ui自动化测试
