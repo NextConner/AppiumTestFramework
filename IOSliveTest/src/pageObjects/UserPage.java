@@ -44,14 +44,22 @@ public class UserPage {
 	public WebElement userName;
 	@FindBy(id = LocUserPage.COINS_ID)
 	public WebElement coins;
+	@FindBy(id="$0.99")
+	public WebElement chargeDoller;
 	@FindBy(xpath = LocUserPage.COIN_PAGES_COIN)
 	public WebElement pageCoins;
+	@FindAll({@FindBy(className=LocUserPage.ABLE_CHARGE_CLASS)})
+	public List<WebElement> rechargeCoins;
 	@FindBy(id = LocUserPage.COINS_RECHARGE_TITLEID)
 	public WebElement recordPage;
 	@FindBy(id = LocUserPage.COINS_RECORDID)
 	public WebElement rechargeRecord;
 	@FindBy(id=LocUserPage.BACK_ID)
 	public WebElement back;
+	@FindBy(id=LocUserPage.RECHARGE_WINDOWID)
+	public WebElement rechargeSiginIn;
+	@FindBy(id=LocUserPage.CANCEL_RECHARGEID)
+	public WebElement cancelRecharge;
 	
 	@FindBy(id = LocUserPage.DIAMONDS_ID)
 	public WebElement diamonds;

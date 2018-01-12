@@ -12,7 +12,8 @@ public class LoginPage {
 
 	public IOSDriver<MobileElement> driver;
 	// public AppiumDriver driver;
-
+	// public static final long=;
+	//
 	public LoginPage(IOSDriver<MobileElement> driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);

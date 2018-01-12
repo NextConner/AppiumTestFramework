@@ -21,7 +21,9 @@ public class LocUserPage {
 	public static final String CONIS_BACKID = "ic back";
 	public static final String COINS_RECORDID = "ic record";
 	public static final String COINS_RECHARGE_TITLEID="Recharge record";
-	
+	public static final String ABLE_CHARGE_CLASS="UIATableCell";
+	public static final String RECHARGE_WINDOWID="Sign In";
+	public static final String CANCEL_RECHARGEID="Cancel";
 
 	public static final String DIAMONDS_ID = "Diamonds";// 包含钻石信息
 	public static final String RECHARGE_ID = "Recharge";

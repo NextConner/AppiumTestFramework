@@ -1,17 +1,19 @@
 package testCases;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNotNull;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -44,7 +46,8 @@ public class UserInfoTestCase {
 	public int count = 0;
 	public WebDriverWait wait;
 	String[] sexs = { "Secret", "Female", "Male" };
-	String[] coins = { "$0.99", "$4.99", "$9.99", "$19.90", "$49.90", "$99.90" };
+	String[] rechargeCoins = { "69", "349", "699", "1399", "3499", "6999" };
+	String[] recargePrice = { "$0.99", "$4.99", "$9.99", "$19.90", "$49.90", "$99.90" };
 
 	@BeforeClass
 	public void setUpClass() throws MalformedURLException {
@@ -73,7 +76,8 @@ public class UserInfoTestCase {
 		// } else {
 		// common.oneTimeLogin(driver, loginPage, winWidth, winHeight);
 		// }
-		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
+		// driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
+
 	}
 
 	@Ignore
@@ -100,11 +104,11 @@ public class UserInfoTestCase {
 		MobileElement user = driver
 				.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]");
 		user.clear();
-		user.setValue("testName");
-		// user.click();
+		String changeName = common.getRandomString(6);
+		user.setValue(changeName);
 		userPage.saveInfo.click();
 		log.info("保存");
-		assertEquals(userPage.userName.getAttribute("name"), "testName");
+		assertEquals(userPage.userName.getAttribute("name"), changeName);
 	}
 
 	@Ignore
@@ -179,7 +183,8 @@ public class UserInfoTestCase {
 		MobileElement user = driver
 				.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]");
 		user.clear();
-		user.setValue("testName");
+		String changeName = common.getRandomString(6);
+		user.setValue(changeName);
 		// 更改用户性别
 		int i = 0;
 		userPage.editSex.click();
@@ -201,7 +206,6 @@ public class UserInfoTestCase {
 			log.info("未获取到当前性别 ： " + nowSex);
 			break;
 		}
-
 		// 更改用户出生日期
 		int startX = 0;
 		int startY = 0;
@@ -227,25 +231,31 @@ public class UserInfoTestCase {
 		assertEquals(userPage.birthday.getAttribute("value").split("-")[0].trim(), String.valueOf(2018 - j).trim(),
 				"更改后生日不匹配！");
 		userPage.saveInfo.click();
-		assertEquals(userPage.userName.getAttribute("name"), "testName", "用户名断言不匹配！");
+		assertEquals(userPage.userName.getAttribute("name"), changeName, "用户名断言不匹配！");
 		userPage.infoEdit.click();
-		assertEquals(userPage.nowSex.getAttribute("value").trim(), sexs[i]);
+		assertEquals(userPage.nowSex.getAttribute("value").trim(), sexs[i], "性别断言不匹配！");
 	}
 
+	@Ignore
 	@Test
-	public void coinsRecharge() {
+	public void coinsRecharge() throws InterruptedException {
 		String coins = userPage.coins.findElements(By.className("UIAStaticText")).get(1).getAttribute("name").trim();
 		log.info("用户金币数 ： " + coins);
 		userPage.coins.click();
 		assertEquals(coins, userPage.pageCoins.getAttribute("name").trim());
+		assertEquals(userPage.chargeDoller.getAttribute("name").trim(), recargePrice[0].trim());
+		List<WebElement> list = userPage.rechargeCoins;
+		for (WebElement we : list) {
+			log.info("可充值金币数：" + we.getAttribute("name"));
+		}
 		userPage.rechargeRecord.click();
 		assertNotNull(userPage.recordPage);
 		userPage.back.click();
 	}
 
+
 	@AfterMethod
 	public void tearDown(Method method) throws InterruptedException {
-
 		TimeUnit.SECONDS.sleep(5);
 	}
 
