@@ -424,16 +424,23 @@ public class LoginTestCase {
 		loginPage.googleLogin.click();
 		TimeUnit.SECONDS.sleep(2);
 		assertNotNull(loginPage.googleLogo, "未跳转到Google登陆页面");
-
+		List<MobileElement> list = driver.findElementsByClassName(LocLoginPage.GOOGLE_SURE_CLASS);
+		for (MobileElement mob : list) {
+			if (mob.getAttribute("name").contains("Choose")) {
+				driver.findElementsByClassName("UIAButton").get(1).click();
+				common.logOut(driver, homePage, settingPage, loginPage, userPage);
+				return;
+			} else {
+				continue;
+			}
+		}
+		log.info("google 登录界面!");
 		MobileElement gAcc = driver.findElementByClassName(LocLoginPage.GOOGLE_ACCOUNT_CLASS);
 		gAcc.setValue("zou7433");
-		Long l = System.currentTimeMillis();
-		log.info("点击下一步" + l);
-		List<MobileElement> list = driver.findElementByClassName("UIAWebView").findElements(By.className("UIAButton"));
+		list = driver.findElementByClassName("UIAWebView").findElements(By.className("UIAButton"));
 		for (MobileElement mo : list) {
 			if (mo.getAttribute("name").contains("NEXT")) {
 				mo.click();
-				log.info(" : " + (System.currentTimeMillis() - l));
 				break;
 			} else {
 				continue;

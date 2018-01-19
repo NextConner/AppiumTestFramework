@@ -142,6 +142,7 @@ public class Common {
 	}
 	
 	public void logOut(IOSDriver<MobileElement> driver,HomePage homePage,SettingPage settingPage,LoginPage loginPage,UserPage userPage) throws InterruptedException {
+		TimeUnit.SECONDS.sleep(4);
 		// 判断签到弹窗
 		ifExistSign(driver, homePage);
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();

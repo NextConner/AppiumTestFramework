@@ -91,7 +91,6 @@ public class LoginPage {
 	public WebElement googlePassword;
 	@FindBy(className = LocLoginPage.GOOGLE_NEXT_CLASS)
 	public WebElement googleSign;
-
 	public void isFirstLogin() {
 		if (quickLogin.getText().length() <= 0) {
 			System.out.println(" is first login!！");
