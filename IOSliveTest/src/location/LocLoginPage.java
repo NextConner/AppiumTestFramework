@@ -49,6 +49,6 @@ public class LocLoginPage {
 	public static final String GOOGLE_LOGOID = "GLive";
 	public static final String GOOGLE_ACCOUNT_CLASS = "UIATextField";
 	public static final String GOOGLE_NEXTID = "NEXT";
-	public static final String GOOGLE_PASSWORD = "UIASecureTextField";
-	public static final String GOOGLE_LOGINID = "NEXT";
+	public static final String GOOGLE_PASSWORD_CLASS = "UIASecureTextField";
+	public static final String GOOGLE_NEXT_CLASS = "UIAButton";
 }

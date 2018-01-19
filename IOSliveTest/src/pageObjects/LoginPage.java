@@ -11,6 +11,7 @@ import location.LocLoginPage;
 public class LoginPage {
 
 	public IOSDriver<MobileElement> driver;
+
 	// public AppiumDriver driver;
 	// public static final long=;
 	//
@@ -18,6 +19,7 @@ public class LoginPage {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
+
 	@FindBy(xpath = LocLoginPage.LIVE_LOGO)
 	public WebElement logo;
 	@FindBy(id = LocLoginPage.PHONE_LOGINID)
@@ -57,7 +59,7 @@ public class LoginPage {
 	public WebElement fbSignIn;
 	@FindBy(xpath = LocLoginPage.FB_GOON)
 	public WebElement fbGoOn;
-	@FindBy(xpath=LocLoginPage.FB_SURE)
+	@FindBy(xpath = LocLoginPage.FB_SURE)
 	public WebElement fbSure;
 
 	// tw
@@ -85,11 +87,19 @@ public class LoginPage {
 	public WebElement googleAccount;
 	@FindBy(id = LocLoginPage.GOOGLE_NEXTID)
 	public WebElement nextStep;
-	@FindBy(className = LocLoginPage.GOOGLE_PASSWORD)
+	@FindBy(className = LocLoginPage.GOOGLE_PASSWORD_CLASS)
 	public WebElement googlePassword;
-	@FindBy(id = LocLoginPage.GOOGLE_LOGINID)
-	public WebElement googleSignIn;
+	@FindBy(className = LocLoginPage.GOOGLE_NEXT_CLASS)
+	public WebElement googleSign;
 
+	public void isFirstLogin() {
+		if (quickLogin.getText().length() <= 0) {
+			System.out.println(" is first login!！");
+		} else {
+			System.out.println(" not first login!！");
+			otherLogin.click();
+		}
+	}
 	/*
 	 * element 模版
 	 * 

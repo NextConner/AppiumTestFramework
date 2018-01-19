@@ -1,5 +1,7 @@
 package utils;
 
+import static org.testng.Assert.assertNotNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -17,6 +19,8 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 import pageObjects.HomePage;
 import pageObjects.LoginPage;
+import pageObjects.SettingPage;
+import pageObjects.UserPage;
 
 public class Common {
 
@@ -136,5 +140,16 @@ public class Common {
 		}
 		return sb.toString();
 	}
-
+	
+	public void logOut(IOSDriver<MobileElement> driver,HomePage homePage,SettingPage settingPage,LoginPage loginPage,UserPage userPage) throws InterruptedException {
+		// 判断签到弹窗
+		ifExistSign(driver, homePage);
+		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
+		userPage.setting.click();
+		settingPage.logOut.click();
+		settingPage.sure.click();
+		// driver.switchTo().alert().accept();
+		TimeUnit.SECONDS.sleep(3);
+		assertNotNull(loginPage.changeLogin, "登出失败！");
+	}
 }

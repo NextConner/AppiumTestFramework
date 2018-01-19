@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.remote.server.handler.FindElements;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 import initAppium.InitADriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
+import location.LocLoginPage;
 import pageObjects.HomePage;
 import pageObjects.LoginPage;
 import pageObjects.SettingPage;
@@ -91,12 +92,7 @@ public class LoginTestCase {
 		log.info("-------------------------start test case  test Normal Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
-		if (loginPage.quickLogin.getText().length() <= 0) {
-			log.info(" is first login!！");
-		} else {
-			log.info(" not first login!！");
-			loginPage.otherLogin.click();
-		}
+		loginPage.isFirstLogin();
 		loginPage.phoneLogin.click();
 		loginPage.changeLogin.click();
 		log.info(winWidth + "--------------   :   --------------" + winHeight);
@@ -335,12 +331,7 @@ public class LoginTestCase {
 		// Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
-		if (loginPage.quickLogin.getText().length() <= 0) {
-			log.info(" is first login!！");
-		} else {
-			log.info(" not first login!！");
-			loginPage.otherLogin.click();
-		}
+		loginPage.isFirstLogin();
 		loginPage.fbLogin.click();
 		TimeUnit.SECONDS.sleep(4);
 		assertNotNull(loginPage.fbTitle, "未跳转到FB登陆页面");
@@ -359,18 +350,7 @@ public class LoginTestCase {
 				if (mobEl.getAttribute("name").equals("继续")) {
 					mobEl.click();
 					TimeUnit.SECONDS.sleep(4);
-					// 判断弹框
-					common.isAlert(driver);
-					// 判断签到弹窗
-					common.ifExistSign(driver, homePage);
-					driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
-					userPage.setting.click();
-					settingPage.logOut.click();
-					settingPage.sure.click();
-					// driver.switchTo().alert().accept();
-					TimeUnit.SECONDS.sleep(3);
-					assertNotNull(loginPage.changeLogin, "登出失败！");
-
+					common.logOut(driver, homePage, settingPage, loginPage, userPage);
 					break;
 				} else {
 					continue;
@@ -392,16 +372,7 @@ public class LoginTestCase {
 					mobEl.click();
 					TimeUnit.SECONDS.sleep(3);
 					// 判断弹框
-					common.isAlert(driver);
-					// 判断签到弹窗
-					common.ifExistSign(driver, homePage);
-					driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
-					userPage.setting.click();
-					settingPage.logOut.click();
-					settingPage.sure.click();
-					// driver.switchTo().alert().accept();
-					TimeUnit.SECONDS.sleep(3);
-					assertNotNull(loginPage.changeLogin, "登出失败！");
+					common.logOut(driver, homePage, settingPage, loginPage, userPage);
 					break;
 				} else {
 					log.info("continue!");
@@ -422,12 +393,7 @@ public class LoginTestCase {
 		// Login-------------------------");
 		winWidth = driver.manage().window().getSize().width;
 		winHeight = driver.manage().window().getSize().height;
-		if (loginPage.quickLogin.getText().trim().length() <= 0) {
-			log.info(" is first login!！");
-		} else {
-			log.info(" not first login!！");
-			loginPage.otherLogin.click();
-		}
+		loginPage.isFirstLogin();
 		loginPage.twitterLogin.click();
 		assertNotNull(loginPage.twitterLogo, "未跳转到Twitter登陆页面");
 		account = driver
@@ -442,64 +408,43 @@ public class LoginTestCase {
 		common.isAlert(driver);
 		// assertNotNull(homePage.startLive, "twitter登录失败！");
 		// common.ifExistSign(driver, homePage);
-		List we = driver.findElementsById("Check in");
-		if (we.size() > 0) {
-			log.info("有签到弹窗！");
-			// int signDays=driver.findElementsById("ic_checkin_check").size();
-			homePage.signClick.click();
-			TimeUnit.SECONDS.sleep(3);
-		} else {
-			log.info("无签到");
-		}
-		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
-		userPage.setting.click();
-		settingPage.logOut.click();
-		settingPage.sure.click();
-		// driver.switchTo().alert().accept();
-		TimeUnit.SECONDS.sleep(3);
-		assertNotNull(loginPage.changeLogin, "登出失败！");
+		common.logOut(driver, homePage, settingPage, loginPage, userPage);
 	}
 
 	/**
 	 * 测试Google 登陆
+	 * 
 	 * @throws InterruptedException
 	 */
 	// @Ignore
 	@Test
 	public void testGoogleLogin() throws InterruptedException {
 		log.info("-------------------------start test case  test Google Login-------------------------");
-		winWidth = driver.manage().window().getSize().width;
-		winHeight = driver.manage().window().getSize().height;
-		if (loginPage.quickLogin.getText().length() <= 0) {
-			log.info(" is first login!！");
-		} else {
-			log.info(" not first login!！");
-			loginPage.otherLogin.click();
-		}
-		loginPage.moreLogin.click();
+		loginPage.isFirstLogin();
 		loginPage.googleLogin.click();
 		TimeUnit.SECONDS.sleep(2);
 		assertNotNull(loginPage.googleLogo, "未跳转到Google登陆页面");
-		
-		MobileElement gAcc = driver.findElementByClassName("UIATextField");
+
+		MobileElement gAcc = driver.findElementByClassName(LocLoginPage.GOOGLE_ACCOUNT_CLASS);
 		gAcc.setValue("zou7433");
-		Long l=System.currentTimeMillis();
+		Long l = System.currentTimeMillis();
 		log.info("点击下一步" + l);
 		List<MobileElement> list = driver.findElementByClassName("UIAWebView").findElements(By.className("UIAButton"));
 		for (MobileElement mo : list) {
 			if (mo.getAttribute("name").contains("NEXT")) {
 				mo.click();
-				log.info(" : " + (System.currentTimeMillis()-l));
+				log.info(" : " + (System.currentTimeMillis() - l));
 				break;
 			} else {
 				continue;
 			}
 		}
-		
-		MobileElement gPas=driver.findElementByClassName("UIASecureTextField");
-		gPas.setValue("qwe3278227");
-		
+		gAcc = driver.findElementByClassName(LocLoginPage.GOOGLE_PASSWORD_CLASS);
+		gAcc.setValue("qwe3278227");
+		list = driver.findElementByClassName("UIAWebView").findElements(By.className("UIAButton"));
+		list.get(0).click();
 		TimeUnit.SECONDS.sleep(3);
+		common.logOut(driver, homePage, settingPage, loginPage, userPage);
 		assertNotNull(homePage.startLive, "twitter登录失败！");
 	}
 
