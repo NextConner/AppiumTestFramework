@@ -81,11 +81,11 @@ public class LoginPage {
 	public WebElement googleLogin;
 	@FindBy(id = LocLoginPage.GOOGLE_LOGOID)
 	public WebElement googleLogo;
-	@FindBy(xpath = LocLoginPage.GOOGLE_ACCOUNT)
+	@FindBy(className = LocLoginPage.GOOGLE_ACCOUNT_CLASS)
 	public WebElement googleAccount;
 	@FindBy(id = LocLoginPage.GOOGLE_NEXTID)
 	public WebElement nextStep;
-	@FindBy(id = LocLoginPage.GOOGLE_PASSWORD)
+	@FindBy(className = LocLoginPage.GOOGLE_PASSWORD)
 	public WebElement googlePassword;
 	@FindBy(id = LocLoginPage.GOOGLE_LOGINID)
 	public WebElement googleSignIn;

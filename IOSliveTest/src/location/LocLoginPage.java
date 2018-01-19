@@ -44,11 +44,11 @@ public class LocLoginPage {
 	public static final String TW_LOGINXP = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]";
 	public static final String TW_AUTH = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]";
 	// Google
-	public static final String GOOGLEID = "ic login google";
+	public static final String GOOGLEID = "ic login google l";
 	public static final String GOOGLEXP = "//UIAApplication[1]/UIAWindow[1]/UIAButton[7]";
 	public static final String GOOGLE_LOGOID = "GLive";
-	public static final String GOOGLE_ACCOUNT = "//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIATextField[1]";
+	public static final String GOOGLE_ACCOUNT_CLASS = "UIATextField";
 	public static final String GOOGLE_NEXTID = "NEXT";
-	public static final String GOOGLE_PASSWORD = "Enter your password";
+	public static final String GOOGLE_PASSWORD = "UIASecureTextField";
 	public static final String GOOGLE_LOGINID = "NEXT";
 }

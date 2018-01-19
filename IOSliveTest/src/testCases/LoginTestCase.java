@@ -6,12 +6,12 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.remote.server.handler.FindElements;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -28,7 +28,6 @@ import pageObjects.HomePage;
 import pageObjects.LoginPage;
 import pageObjects.SettingPage;
 import pageObjects.UserPage;
-import utils.CheckNotifiWindow;
 import utils.Common;
 
 @Test
@@ -68,7 +67,7 @@ public class LoginTestCase {
 		// count++;
 		// }
 		// }
-		//使用后台线程查找非预期弹窗代替硬等待
+		// 使用后台线程查找非预期弹窗代替硬等待
 		// CheckNotifiWindow chk=new CheckNotifiWindow(driver);
 		// Thread t=new Thread(chk);
 		// t.setDaemon(true);
@@ -80,9 +79,9 @@ public class LoginTestCase {
 	public void setUp() throws InterruptedException, MalformedURLException {
 		log.info("-----------------------------START!-----------------------------");
 		// TODO 在每条测试用例执行之前保证测试环境的一致性,建议使用reset 设置
-		 if (count == 0) {
-		 common.isAlert(driver);
-		 }
+		// if (count == 0) {
+		// common.isAlert(driver);
+		// }
 	}
 
 	// @Ignore
@@ -130,7 +129,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	// @Ignore
+	@Ignore
 	@Parameters({ "nullAccount", "normalPassword" })
 	@Test
 	public void testNullAccount(String nullAccount, String normalPassword) throws InterruptedException {
@@ -158,7 +157,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	// @Ignore
+	@Ignore
 	@Parameters({ "wrongAccount", "normalPassword" })
 	@Test
 	public void testWrongAccount(String wrongAccount, String normalPassword) throws InterruptedException {
@@ -186,7 +185,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	// @Ignore
+	@Ignore
 	@Parameters({ "unNormalAccount", "normalPassword" })
 	@Test
 	public void testUnNormalAccount(String unNormalAccount, String normalPassword) throws InterruptedException {
@@ -213,7 +212,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	// @Ignore
+	@Ignore
 	@Parameters({ "normalAccount", "normalPassword" })
 	@Test
 	public void testErroeCodeAccount(String normalAccount, String normalPassword) throws InterruptedException {
@@ -238,7 +237,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	// @Ignore
+	@Ignore
 	@Parameters({ "normalAccount", "nullPassword" })
 	@Test
 	public void testNullPassword(String normalAccount, String nullPassword) throws InterruptedException {
@@ -266,7 +265,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	// @Ignore
+	@Ignore
 	@Parameters({ "normalAccount", "wrongPassword" })
 	@Test
 	public void testWrongPassword(String normalAccount, String wrongPassword) throws InterruptedException {
@@ -295,7 +294,7 @@ public class LoginTestCase {
 		assertNotNull(loginPage.loginBar, "断言失败！");
 	}
 
-	// @Ignore
+	@Ignore
 	@Parameters({ "normalAccount", "unNormalPassword" })
 	@Test
 	public void testUnNormalPassword(String normalAccount, String unNormalPassword) throws InterruptedException {
@@ -416,7 +415,7 @@ public class LoginTestCase {
 	 * 
 	 * @throws InterruptedException
 	 */
-	 //@Ignore
+	// @Ignore
 	@Test
 	public void testTwitterLogin() throws InterruptedException {
 		// log.info("-------------------------start test case test Twitter
@@ -463,10 +462,9 @@ public class LoginTestCase {
 
 	/**
 	 * 测试Google 登陆
-	 * 
 	 * @throws InterruptedException
 	 */
-	@Ignore
+	// @Ignore
 	@Test
 	public void testGoogleLogin() throws InterruptedException {
 		log.info("-------------------------start test case  test Google Login-------------------------");
@@ -482,20 +480,25 @@ public class LoginTestCase {
 		loginPage.googleLogin.click();
 		TimeUnit.SECONDS.sleep(2);
 		assertNotNull(loginPage.googleLogo, "未跳转到Google登陆页面");
-		Set<String> se = driver.getContextHandles();
-		List<String> list = new ArrayList<String>();
-		for (String str : se) {
-			list.add(str);
+		
+		MobileElement gAcc = driver.findElementByClassName("UIATextField");
+		gAcc.setValue("zou7433");
+		Long l=System.currentTimeMillis();
+		log.info("点击下一步" + l);
+		List<MobileElement> list = driver.findElementByClassName("UIAWebView").findElements(By.className("UIAButton"));
+		for (MobileElement mo : list) {
+			if (mo.getAttribute("name").contains("NEXT")) {
+				mo.click();
+				log.info(" : " + (System.currentTimeMillis()-l));
+				break;
+			} else {
+				continue;
+			}
 		}
-		// loginPage.googleAccount.click();
-		// loginPage.googleAccount.sendKeys("1115785160@qq.com");
-		// loginPage.nextStep.click();
-		// loginPage.googleAccount.click();
-		// loginPage.googleAccount.sendKeys("1115785160@qq.com");
-		// loginPage.nextStep.click();
-		// loginPage.googlePassword.click();
-		// loginPage.googlePassword.sendKeys("zjt3461829");
-		// loginPage.googleSignIn.click();
+		
+		MobileElement gPas=driver.findElementByClassName("UIASecureTextField");
+		gPas.setValue("qwe3278227");
+		
 		TimeUnit.SECONDS.sleep(3);
 		assertNotNull(homePage.startLive, "twitter登录失败！");
 	}
@@ -521,7 +524,7 @@ public class LoginTestCase {
 	@AfterClass
 	public void destory() throws InterruptedException {
 		if (driver != null) {
-			driver.removeApp("com.gomo.ios.gLive");
+			// driver.removeApp("com.gomo.ios.gLive");
 			driver.quit();
 		}
 		log.info("-----------------------------END!-----------------------------");
