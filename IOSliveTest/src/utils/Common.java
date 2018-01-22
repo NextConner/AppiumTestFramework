@@ -119,8 +119,8 @@ public class Common {
 				.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIATextField[1]");
 		MobileElement password = (MobileElement) driver
 				.findElementByXPath("//UIAApplication[1]/UIAWindow[1]/UIASecureTextField[1]");
-		account.setValue("13576046405");
-		password.setValue("123456");
+		account.setValue("13570351393");
+		password.setValue("1234567");
 		account = null;
 		password = null;
 		tapByXY(driver, winWidth, winHeight, 5, 3, 1);
@@ -129,7 +129,7 @@ public class Common {
 		TimeUnit.SECONDS.sleep(3);
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 	}
-
+	
 	public String getRandomString(int length) { // length表示生成字符串的长度
 		String base = "abcdefghijklmnopqrstuvwxyz0123456789";
 		Random random = new Random();

@@ -24,8 +24,31 @@ public class LocUserPage {
 	public static final String ABLE_CHARGE_CLASS="UIATableCell";
 	public static final String RECHARGE_WINDOWID="Sign In";
 	public static final String CANCEL_RECHARGEID="Cancel";
-
+	//钻石
 	public static final String DIAMONDS_ID = "Diamonds";// 包含钻石信息
+	public static final String DIAMONDS_EXCHANGE_RECORDID ="ic record";
+	public static final String DIAMONDS_TITLEID="pic_diamonds";
+	public static final String DIAMONDS_NUM_INPAGE="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAStaticText[2]";
+	public static final String DIAMONSA_NUM_CLASS="UIAStaticText";
+	public static final String DIAMONDS_EXCHANGEID="Exchange";
+	public static final String DIAMONDS_CASHOUTID="Cash out";
+	public static final String DIAMONDS_EXCHANGE_PRICE_CLASS="UIATableCell";
+	public static final String DIAMONDS_PRICECLASS="UIAButton";
+	public static final String DIAMONDS_ECHANGEOK="Ok";
+	public static final String ABLECASH="//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAStaticText[3]";
+	public static final String EXCHANGE_PAGE_DIAMOND="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIAStaticText[2]";
+	public static final String CASHNUM_CLASS="UIATextField";
+	public static final String CASH_BACKID="ic back";
+	public static final String CASH_INFO_FIRSTNAME="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIATextField[1]";
+	public static final String CASH_INFO_LASTNAME="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIATextField[1]";
+	public static final String CASH_INFO_EMAIL="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[3]/UIATextField[1]";
+	public static final String CASH_INFO_CARDNUM="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[4]/UIATextField[1]";
+	public static final String CASH_INFO_BANKNAME="//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[4]/UIATextField[1]";
+	public static final String CASH_NEXTID="Next";
+	
+	
+	// public static final String
+	
 	public static final String RECHARGE_ID = "Recharge";
 	public static final String LEVEL_ID = "Level";// 用户等级
 	public static final String BROADCAST_LEVEL_ID = "Broadcast Level";// 主播等级

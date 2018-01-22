@@ -63,6 +63,19 @@ public class UserPage {
 	
 	@FindBy(id = LocUserPage.DIAMONDS_ID)
 	public WebElement diamonds;
+	@FindBy(xpath=LocUserPage.DIAMONDS_NUM_INPAGE)
+	public WebElement diamondsInPage;
+	
+	@FindBy(id=LocUserPage.DIAMONDS_EXCHANGEID)
+	public WebElement diamondExchange;
+	@FindAll({@FindBy(className=LocUserPage.DIAMONDS_EXCHANGE_PRICE_CLASS)})
+	public List<WebElement> diamondExchangePrice;
+	@FindBy(className=LocUserPage.DIAMONDS_PRICECLASS)
+	public WebElement diamondExchangeCoins;
+	@FindBy(xpath=LocUserPage.EXCHANGE_PAGE_DIAMOND)
+	public WebElement exchangePageDiamond; 
+	
+	
 	@FindBy(id = LocUserPage.LEVEL_ID)
 	public WebElement level;
 	@FindBy(id = LocUserPage.BROADCAST_LEVEL_ID)

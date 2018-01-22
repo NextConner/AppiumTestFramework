@@ -5,7 +5,6 @@ import static org.testng.Assert.assertNotNull;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +21,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+import com.gargoylesoftware.htmlunit.javascript.host.geo.Position;
+
 import initAppium.InitADriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
@@ -33,6 +34,8 @@ import utils.Common;
 public class UserInfoTestCase {
 
 	IOSDriver<MobileElement> driver;
+	String appBudleId = "com.gomo.ios.glive";
+	String appPath = "/Users/xuqin/Desktop/liveApp/GLive1.6.1.app";
 	Log log = LogFactory.getLog(UserInfoTestCase.class);
 	public InitADriver initDriver;
 	public LoginPage loginPage;
@@ -55,7 +58,7 @@ public class UserInfoTestCase {
 		this.driver = initDriver.setUpAppium();
 		this.loginPage = new LoginPage(driver);
 		this.userPage = new UserPage(driver);
-		this.common = new Common();
+		this.common = new Common(); 
 	}
 
 	@BeforeMethod
@@ -67,7 +70,7 @@ public class UserInfoTestCase {
 		// common.isAlert(driver);
 		// }
 
-		winWidth = driver.manage().window().getSize().getWidth();
+		// winWidth = driver.manage().window().getSize().getWidth();
 		// winHeight = driver.manage().window().getSize().getHeight();
 		// 判断是否已经登录
 		// if (loginPage.logo == null) {
@@ -76,7 +79,7 @@ public class UserInfoTestCase {
 		// } else {
 		// common.oneTimeLogin(driver, loginPage, winWidth, winHeight);
 		// }
-		// driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
+		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 
 	}
 
@@ -253,15 +256,39 @@ public class UserInfoTestCase {
 		userPage.back.click();
 	}
 
+	// @Ignore
+	@Test
+	public void diamondsExchange() throws InterruptedException {
+		String nowDiamonds = userPage.diamonds.findElements(By.className("UIAStaticText")).get(1).getAttribute("name")
+				.trim();
+		log.info("当前用户钻石数 ： " + nowDiamonds);
+		userPage.diamonds.click();
+		assertEquals(userPage.diamondsInPage.getAttribute("name").trim(), nowDiamonds, "个人信息页面钻石数不符！");
+		userPage.diamondExchange.click();
+		assertNotNull(userPage.diamondExchangeCoins, "可兑换金币为空！");
+		userPage.diamondExchangePrice.get(0).findElement(By.className("UIAButton")).click();
+		assertNotNull(driver.findElementByClassName("UIAAlert"));
+		driver.switchTo().alert().accept();
+		TimeUnit.SECONDS.sleep(3);
+		String afterExchange = String.valueOf(Integer.valueOf(nowDiamonds) - 100);
+		assertEquals(userPage.exchangePageDiamond.getAttribute("name").trim(), afterExchange.trim(), "兑换后钻石数不符");
+		Point p = userPage.back.getLocation();
+		for (int i = 0; i < 2; i++) {
+			driver.tap(1, p.x, p.y, 300);
+		}
+		
+	}
 
 	@AfterMethod
 	public void tearDown(Method method) throws InterruptedException {
-		TimeUnit.SECONDS.sleep(5);
+		log.info("-------------------------------" + method.getName() + " : 方法测试结束---------------------------");
+		TimeUnit.SECONDS.sleep(3);
+		driver.closeApp();
 	}
 
 	@AfterClass
 	public void destory() {
-		log.info("uninstall app");
+		log.info("uninstall app after "+this.getClass().getName()+" testClass!");
 		// driver.removeApp("com.gomo.ios.gLive");
 		driver.quit();
 	}
