@@ -458,6 +458,7 @@ public class LoginTestCase {
 	@AfterMethod
 	public void tearDown(Method method) throws InterruptedException, MalformedURLException {
 		count++;
+		log.info("-------------------------------" + method.getName() + " : 方法测试结束---------------------------");
 		// log.info("reset appStatues after every testcase : count:" + count);
 		if (!method.getName().contains("Login")) {
 			log.info(count + " : 非登录方法，仅关闭app");

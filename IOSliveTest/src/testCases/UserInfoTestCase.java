@@ -21,11 +21,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
-import com.gargoylesoftware.htmlunit.javascript.host.geo.Position;
-
 import initAppium.InitADriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
+import location.LocUserPage;
 import pageObjects.LoginPage;
 import pageObjects.UserPage;
 import utils.Common;
@@ -58,7 +57,7 @@ public class UserInfoTestCase {
 		this.driver = initDriver.setUpAppium();
 		this.loginPage = new LoginPage(driver);
 		this.userPage = new UserPage(driver);
-		this.common = new Common(); 
+		this.common = new Common();
 	}
 
 	@BeforeMethod
@@ -70,8 +69,8 @@ public class UserInfoTestCase {
 		// common.isAlert(driver);
 		// }
 
-		// winWidth = driver.manage().window().getSize().getWidth();
-		// winHeight = driver.manage().window().getSize().getHeight();
+		winWidth = driver.manage().window().getSize().getWidth();
+		winHeight = driver.manage().window().getSize().getHeight();
 		// 判断是否已经登录
 		// if (loginPage.logo == null) {
 		// log.info("已经是登录状态！");
@@ -256,7 +255,7 @@ public class UserInfoTestCase {
 		userPage.back.click();
 	}
 
-	// @Ignore
+	@Ignore
 	@Test
 	public void diamondsExchange() throws InterruptedException {
 		String nowDiamonds = userPage.diamonds.findElements(By.className("UIAStaticText")).get(1).getAttribute("name")
@@ -276,6 +275,68 @@ public class UserInfoTestCase {
 		for (int i = 0; i < 2; i++) {
 			driver.tap(1, p.x, p.y, 300);
 		}
+	}
+
+	@Ignore
+	@Test
+	public void userLevelInfo() {
+		String userLevel = userPage.level.findElements(By.className("UIAStaticText")).get(1).getAttribute("name")
+				.trim();
+		log.info("当前用户等级 " + userLevel);
+		userPage.level.click();
+		assertEquals(userLevel, driver.findElementById(userLevel).getAttribute("name").trim(), "用户等级不匹配！");
+		userPage.back.click();
+		log.info("返回用户个人信息页面");
+	}
+
+	@Ignore
+	@Test
+	public void userBroadcastLevel() {
+		String userBroadcastLevel = userPage.level.findElements(By.className("UIAStaticText")).get(1)
+				.getAttribute("name").trim();
+		log.info("当前用户主播等级  ：" + userBroadcastLevel);
+		userPage.broadcastLevel.click();
+		log.info("查看认证主播");
+		userPage.anchorCertification.click();
+		userPage.newAnchorCertification.click();
+		List<WebElement> list = userPage.anchorCertificationCnditions;
+		log.info("－－－－－－－－－－－－认证主播条件！－－－－－－－－－－－－－");
+		log.info(list.size());
+		for (WebElement we : list) {
+			log.info(we.getAttribute("name"));
+		}
+		Point p = userPage.back.getLocation();
+		for (int i = 0; i < 3; i++) {
+			driver.tap(1, p.x, p.y, 300);
+		}
+		log.info("返回到个人信息页面！");
+	}
+
+	@Test
+	public void contributeRank() throws InterruptedException {
+		log.info("－－－－－－－－－－－－－－－－执行滑动操作－－－－－－－－－－－－－－－－－－");
+		driver.swipe(winWidth / 2, winHeight / 2, winWidth / 2, winHeight / 4, 300);
+		userPage.contributeRank.click();
+		log.info("进入观众贡献列表！");
+		List<WebElement> list = userPage.contributeUserList;
+		StringBuilder sb = new StringBuilder();
+		for (WebElement we : list) {
+			List<WebElement> li = we.findElements(By.className(LocUserPage.CONTRIBUTE_USER_INFO_CLASS));
+			if (li.size() == 3) {
+				sb.append(" 用户: " + li.get(1).getAttribute("name") + " ; 贡献值: " + li.get(0).getAttribute("name"));
+			} else if (li.size() == 4) {
+				sb.append(" 用户: " + li.get(2).getAttribute("name") + " ; 贡献值: " + li.get(1).getAttribute("name"));
+			} else {
+				log.info("第一页贡献榜已打印完毕！");
+				break;
+			}
+			log.info(sb.toString());
+			sb.setLength(0);
+		}	
+		assertNotNull(driver.findElementById(LocUserPage.CONTRIBUTE_RANK_ID));
+		
+		userPage.back.click();
+		
 		
 	}
 
@@ -288,7 +349,7 @@ public class UserInfoTestCase {
 
 	@AfterClass
 	public void destory() {
-		log.info("uninstall app after "+this.getClass().getName()+" testClass!");
+		log.info("uninstall app after " + this.getClass().getName() + " testClass!");
 		// driver.removeApp("com.gomo.ios.gLive");
 		driver.quit();
 	}

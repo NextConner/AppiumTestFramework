@@ -78,8 +78,27 @@ public class UserPage {
 	
 	@FindBy(id = LocUserPage.LEVEL_ID)
 	public WebElement level;
+	
 	@FindBy(id = LocUserPage.BROADCAST_LEVEL_ID)
 	public WebElement broadcastLevel;
+	@FindBy(id=LocUserPage.BROADCAST_TITLE)
+	public WebElement broadcastTitle;
+	@FindBy(xpath=LocUserPage.BROADCAST_CONTINUELY_DAY)
+	public WebElement continuebBroadCastDay;
+	@FindBy(xpath=LocUserPage.BROADCAST_DAY)
+	public WebElement broadcastDay;
+	@FindBy(id=LocUserPage.ANCHOR_CERTIFICATION)
+	public WebElement anchorCertification;
+	@FindBy(xpath=LocUserPage.ANCHOR_CERTIFICATION_ONE)
+	public WebElement newAnchorCertification;
+	@FindAll({@FindBy(className=LocUserPage.ANCHOR_CERTIFICATION_CONDITIONS)})
+	public List<WebElement> anchorCertificationCnditions;
+	@FindBy(id=LocUserPage.CONTRIBUTE_RANK_ID)
+	public WebElement contributeRank;
+	@FindAll({@FindBy(className=LocUserPage.CONTRIBUTE_USER_CLASS)})
+	public List<WebElement> contributeUserList;//再次查询uiastatictext获取用户详细信息
+	
+	
 	@FindBy(id = LocUserPage.BACK_ID)
 	public WebElement infoBack;
 	@FindBy(id = LocUserPage.SEX_SECRETID)
