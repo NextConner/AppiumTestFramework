@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -55,8 +56,8 @@ public class UserInfoTestCase {
 	public void setUpClass() throws MalformedURLException {
 		this.initDriver = new InitADriver();
 		this.driver = initDriver.setUpAppium();
-		this.loginPage = new LoginPage(driver);
-		this.userPage = new UserPage(driver);
+		this.loginPage = LoginPage.getInstance(driver);
+		this.userPage = UserPage.getInstace(driver);
 		this.common = new Common();
 	}
 
@@ -84,7 +85,7 @@ public class UserInfoTestCase {
 
 	@Ignore
 	@Test
-	public void getUserInfo() {
+	public void testGetUserInfo() {
 		log.info("当前登录用户 ： " + userPage.userName.getAttribute("name"));
 		log.info("用户金币数 ： " + userPage.coins.findElements(By.className("UIAStaticText")).get(1).getAttribute("name"));
 		log.info(
@@ -98,7 +99,7 @@ public class UserInfoTestCase {
 	@Ignore
 	// @Parameters({"testName"}) String testName
 	@Test
-	public void editUserName() throws InterruptedException {
+	public void testEditUserName() throws InterruptedException {
 		String userName = userPage.userName.getAttribute("name").trim();
 		log.info("当前登录用户 ： " + userName);
 
@@ -115,7 +116,7 @@ public class UserInfoTestCase {
 
 	@Ignore
 	@Test
-	public void editUserSex() {
+	public void testEditUserSex() {
 		int i = 0;
 		userPage.infoEdit.click();
 		userPage.editSex.click();
@@ -147,7 +148,7 @@ public class UserInfoTestCase {
 	@Ignore
 	// int i
 	@Test
-	public void editUserBirth() throws InterruptedException {
+	public void testEditUserBirth() throws InterruptedException {
 		int startX = 0;
 		int startY = 0;
 		int height = 0;
@@ -177,7 +178,7 @@ public class UserInfoTestCase {
 
 	@Ignore
 	@Test
-	public void editUserInfo() throws InterruptedException {
+	public void testEditUserInfo() throws InterruptedException {
 		String userName = userPage.userName.getAttribute("name").trim();
 		log.info("当前登录用户 ： " + userName);
 		// 更改用户名
@@ -240,7 +241,7 @@ public class UserInfoTestCase {
 
 	@Ignore
 	@Test
-	public void coinsRecharge() throws InterruptedException {
+	public void testCoinsRecharge() throws InterruptedException {
 		String coins = userPage.coins.findElements(By.className("UIAStaticText")).get(1).getAttribute("name").trim();
 		log.info("用户金币数 ： " + coins);
 		userPage.coins.click();
@@ -257,7 +258,7 @@ public class UserInfoTestCase {
 
 	@Ignore
 	@Test
-	public void diamondsExchange() throws InterruptedException {
+	public void testDiamondsExchange() throws InterruptedException {
 		String nowDiamonds = userPage.diamonds.findElements(By.className("UIAStaticText")).get(1).getAttribute("name")
 				.trim();
 		log.info("当前用户钻石数 ： " + nowDiamonds);
@@ -272,14 +273,14 @@ public class UserInfoTestCase {
 		String afterExchange = String.valueOf(Integer.valueOf(nowDiamonds) - 100);
 		assertEquals(userPage.exchangePageDiamond.getAttribute("name").trim(), afterExchange.trim(), "兑换后钻石数不符");
 		Point p = userPage.back.getLocation();
-		for (int i = 0; i < 2; i++) {
-			driver.tap(1, p.x, p.y, 300);
-		}
+
+		driver.tap(1, p.x, p.y, 300);
+		driver.tap(1, p.x, p.y, 300);
 	}
 
 	@Ignore
 	@Test
-	public void userLevelInfo() {
+	public void testUserLevelInfo() {
 		String userLevel = userPage.level.findElements(By.className("UIAStaticText")).get(1).getAttribute("name")
 				.trim();
 		log.info("当前用户等级 " + userLevel);
@@ -291,7 +292,7 @@ public class UserInfoTestCase {
 
 	@Ignore
 	@Test
-	public void userBroadcastLevel() {
+	public void testUserBroadcastLevel() {
 		String userBroadcastLevel = userPage.level.findElements(By.className("UIAStaticText")).get(1)
 				.getAttribute("name").trim();
 		log.info("当前用户主播等级  ：" + userBroadcastLevel);
@@ -312,8 +313,9 @@ public class UserInfoTestCase {
 		log.info("返回到个人信息页面！");
 	}
 
+	@Ignore
 	@Test
-	public void contributeRank() throws InterruptedException {
+	public void testContributeRank() throws InterruptedException {
 		log.info("－－－－－－－－－－－－－－－－执行滑动操作－－－－－－－－－－－－－－－－－－");
 		driver.swipe(winWidth / 2, winHeight / 2, winWidth / 2, winHeight / 4, 300);
 		userPage.contributeRank.click();
@@ -332,12 +334,31 @@ public class UserInfoTestCase {
 			}
 			log.info(sb.toString());
 			sb.setLength(0);
-		}	
+		}
 		assertNotNull(driver.findElementById(LocUserPage.CONTRIBUTE_RANK_ID));
-		
-		userPage.back.click();
-		
-		
+		userPage.contributeFirst.click();
+		userPage.userMoreButton.click();
+		userPage.cancelUserAction.click();
+		Point p = userPage.back.getLocation();
+		for (int i = 0; i < 2; i++) {
+			driver.tap(1, p.x, p.y, 300);
+		}
+		log.info("end this test case");
+	}
+
+	@Test
+	public void testMyBadge() throws InterruptedException {
+		userPage.myBadge.click();
+		assertNotNull(userPage.badgePageTitle, "未跳转到徽章页面！");
+		// String pattern = "\\d?"; 匹配数字的非贪心正则
+		int badgeNum = Integer.valueOf(userPage.badgeNum.getAttribute("name").substring(12, 14).trim());
+		log.info("当前拥有的徽章数量是 ： " + badgeNum);
+		List<MobileElement> badgeType = driver.findElementsByClassName(LocUserPage.MY_BADGE_CLASS);
+		for (int i = 0; i < 3; i++) {
+			log.info("当前徽章类别 ： " + badgeType.get(i).getAttribute("name"));
+		}
+		TimeUnit.SECONDS.sleep(10);
+		// TODO 已拥有徽章的穿戴和卸下
 	}
 
 	@AfterMethod

@@ -56,10 +56,10 @@ public class LoginTestCase {
 	public void setUpTest() throws MalformedURLException {
 		this.initDriver = new InitADriver();
 		this.driver = initDriver.setUpAppium();
-		this.loginPage = new LoginPage(driver);
-		this.homePage = new HomePage(driver);
-		this.settingPage = new SettingPage(driver);
-		this.userPage = new UserPage(driver);
+		this.loginPage = LoginPage.getInstance(driver);
+		this.homePage = HomePage.getInstance(driver) ;
+		this.settingPage = SettingPage.getInstance(driver);
+		this.userPage = UserPage.getInstace(driver);
 		this.common = new Common();
 		sTime = System.currentTimeMillis();
 		// Method[] m = this.getClass().getMethods();

@@ -10,9 +10,17 @@ import location.LocHomePage;
 
 public class HomePage {
 
+	private static  HomePage homePage = null;
 	public IOSDriver<MobileElement> driver;
 
-	public HomePage(IOSDriver<MobileElement> driver) {
+	public static HomePage getInstance(IOSDriver<MobileElement> driver) {
+		if (homePage == null) {
+			homePage = new HomePage(driver);
+		}
+		return homePage;
+	}
+
+	private HomePage(IOSDriver<MobileElement> driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
@@ -26,11 +34,10 @@ public class HomePage {
 	@FindBy(id = LocHomePage.SIGN_TITLEID)
 	public WebElement signWindow;
 
-	@FindBy(xpath=LocHomePage.SIGN)
+	@FindBy(xpath = LocHomePage.SIGN)
 	public WebElement signClick;
-	
-	@FindBy(xpath=LocHomePage.SIGN_DAYS)
+
+	@FindBy(xpath = LocHomePage.SIGN_DAYS)
 	public WebElement signDay;
-	
-	
+
 }

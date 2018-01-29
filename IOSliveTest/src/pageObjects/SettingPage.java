@@ -10,9 +10,18 @@ import location.Loc;
 
 public class SettingPage {
 
+	private static SettingPage settingPage=null;
+	
 	public IOSDriver<MobileElement> driver;
 	
-	public SettingPage(IOSDriver<MobileElement> driver) {
+	public static SettingPage getInstance(IOSDriver<MobileElement> driver) {
+		if(settingPage==null) {
+			settingPage=new SettingPage(driver);
+		}
+		return settingPage;
+	}
+	
+	private SettingPage(IOSDriver<MobileElement> driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}

@@ -10,12 +10,17 @@ import location.LocLoginPage;
 
 public class LoginPage {
 
+	private static LoginPage loginPage = null;
 	public IOSDriver<MobileElement> driver;
 
-	// public AppiumDriver driver;
-	// public static final long=;
-	//
-	public LoginPage(IOSDriver<MobileElement> driver) {
+	public static LoginPage getInstance(IOSDriver<MobileElement> driver) {
+		if (loginPage == null) {
+			loginPage = new LoginPage(driver);
+		}
+		return loginPage;
+	}
+
+	private LoginPage(IOSDriver<MobileElement> driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
@@ -91,6 +96,7 @@ public class LoginPage {
 	public WebElement googlePassword;
 	@FindBy(className = LocLoginPage.GOOGLE_NEXT_CLASS)
 	public WebElement googleSign;
+
 	public void isFirstLogin() {
 		if (quickLogin.getText().length() <= 0) {
 			System.out.println(" is first login!！");

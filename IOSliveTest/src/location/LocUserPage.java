@@ -8,14 +8,16 @@ public class LocUserPage {
 	public static final String SETTINGXP = COMMON + "UIANavigationBar[1]/UIAImage[2]";
 	public static final String INFO_EDITID = "ic self edit";
 	public static final String INFO_EDITXP = "COMMON+UIANavigationBar[1]/UIAButton[2]";
-
+	// 徽章
 	public static final String MY_BADGE_ID = "My badge";
 	public static final String MY_BADGETITLE_ID = "My badge";
-	public static final String MY_BADGENUMBER = COMMON + "UIAStaticText[2]";
+	public static final String MY_BADGE_NUMBER = COMMON + "UIAStaticText[2]";
 	public static final String MY_BADGE_CLASS = "UIACollectionCell";// not end with badge
-	public static final String MY_BADGE_TYPE_CLASS = "UIACollectionCell";// end wth badge
+	public static final String MY_EXIT_BADGE_CLASS = "UIACollectionCell";// end wth badge
 	public static final String BADGE_NOT_OBTAIN = COMMON + "UIAButton[1]";
-
+	public static final String BADGE_USEFUL_DAY = COMMON + "UIAStaticText[3]";//徽章有效期
+	public static final String BADGE_NOT_OBTAINID="not yet obtained";//未获得该徽章
+		
 	public static final String COINS_ID = "Coins";// 包含金币信息
 	public static final String COINS_CLASS = "UIAStaticText";// value 值为［1］
 	public static final String COIN_PAGES_COIN = COMMON + "UIATableView[1]/UIAStaticText[2]";
@@ -63,14 +65,14 @@ public class LocUserPage {
 	public static final String ANCHOR_CERTIFICATION_CONDITIONS = "UIATableCell";
 
 	public static final String CONTRIBUTE_RANK_ID = "Contribute Rank";
-	public static final String CONTRIBUTE_USER_CLASS="UIATableCell";
-	public static final String CONTRIBUTE_USER_INFO_CLASS="UIAStaticText";//[0],[1],[2]
-	public static final String OTHER_USER_INFO_CLASS="UIANavigationBar";
-	public static final String CONTRIBUTE_FIRST="ic_rank_first";
-	public static final String USER_MOREID="btn more";//其他用户个人信息页面操作按钮
-	public static final String ACTION_USER="UIACollectionView";
-	public static final String CANCLE_USER_ACTIONID="Cancel";
-	
+	public static final String CONTRIBUTE_USER_CLASS = "UIATableCell";
+	public static final String CONTRIBUTE_USER_INFO_CLASS = "UIAStaticText";// [0],[1],[2]
+	public static final String OTHER_USER_INFO_CLASS = "UIANavigationBar";
+	public static final String CONTRIBUTE_FIRSTID = "ic_rank_first";
+	public static final String USER_MOREID = "btn more";// 其他用户个人信息页面操作按钮
+	public static final String ACTION_USER = "UIACollectionView";
+	public static final String CANCLE_USER_ACTIONID = "Cancel";
+
 	public static final String EDIT_TITLEID = "Edit";
 	public static final String USER_NAME_CLASS = "UIANavigationBar";// get name /get value
 	public static final String EDIT_USERNAME = COMMON + "UIATableView[1]/UIATableCell[1]/UIATextField[1]";

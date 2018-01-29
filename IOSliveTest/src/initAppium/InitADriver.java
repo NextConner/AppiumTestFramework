@@ -12,8 +12,10 @@ import io.appium.java_client.ios.IOSDriver;
 
 public class InitADriver {
 
-	public IOSDriver<MobileElement> driver;
-	WebDriverWait wait;
+	
+	public IOSDriver<MobileElement> driver = null;
+	// appium提供的等待方法，在此对象的构造方法中传参进行等待
+	// WebDriverWait wait;
 
 	public IOSDriver<MobileElement> setUpAppium() throws MalformedURLException {
 
@@ -27,15 +29,14 @@ public class InitADriver {
 		// desiredCapabilities.setCapability(MobileCapabilityType.APP,
 		// "/Users/taoge/Desktop/liveApp/GLive.app");
 		// desiredCapabilities.setCapability(MobileCapabilityType.NO_RESET,true);
-		desiredCapabilities.setCapability("deviceName", "iPhone 6s Plus");
-		desiredCapabilities.setCapability("platformVersion", "9.2");
-		try {
+		// desiredCapabilities.setCapability("deviceName", "iPhone 6s Plus");
+		// desiredCapabilities.setCapability("platformVersion", "9.2");
+		// 实例driver对象之前判空
+		if (driver == null) {
 			driver = new IOSDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), desiredCapabilities);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		//WebDriverWait wait = new WebDriverWait(driver, 30);
+		// WebDriverWait wait = new WebDriverWait(driver, 30);
 		return driver;
 	}
 
