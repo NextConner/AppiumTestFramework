@@ -1,10 +1,11 @@
-package utils;
+package main.java.utils;
 
-import java.util.concurrent.TimeUnit;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.util.concurrent.TimeUnit;
 
 public class CheckNotifiWindow implements Runnable {
 

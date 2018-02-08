@@ -11,4 +11,5 @@ public class LocHomePage {
 		public static final String SIGN = "//UIAApplication[1]/UIAWindow[1]/UIAButton[1]";// 签到按钮
 		public static final String SIGN_DAYS = "//UIAApplication[1]/UIAWindow[1]/UIApublic staticText[1]";
 		public static final String SIGN_SUREID = "Confirm";
+
 }

@@ -1,6 +1,16 @@
 package utils;
 
-import static org.testng.Assert.assertNotNull;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.ios.IOSDriver;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import pageObjects.HomePage;
+import pageObjects.LoginPage;
+import pageObjects.SettingPage;
+import pageObjects.UserPage;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,23 +18,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.ios.IOSDriver;
-import pageObjects.HomePage;
-import pageObjects.LoginPage;
-import pageObjects.SettingPage;
-import pageObjects.UserPage;
+import static org.testng.Assert.assertNotNull;
 
 public class Common {
 
-	public Log log;
+	public static Log log;
+	// 第一次签到的时间，设置为静态变量，在第一次签到之后赋值，之后每次调用判断签到框首先判断距离上次签到时间
+	public static Long signTime = null;
 
 	public Common() {
 		log = LogFactory.getLog(this.getClass());
@@ -39,16 +39,17 @@ public class Common {
 		return Thread.currentThread().getStackTrace()[1].getMethodName().toString();
 	}
 
-	public void tapByXY(AppiumDriver driver, int width, int height, int xtimes, int ytimes, int finger) {
-		// log.info("Tap by relative location!");
+	public void tapByXY(IOSDriver<MobileElement> driver, int width, int height, int xtimes, int ytimes, int finger) {
+		// log.info("Tap by relative main.java.location!");
 		int sX = width / xtimes;
 		int sY = height / ytimes;
 		log.info("------------------Tap X" + sX + ";Tap Y" + sY + "------------------------");
 		driver.tap(finger, sX, sY, 300);
 	}
 
-	public void tapByTimes(AppiumDriver driver, int width, int height, double xtimes, double ytimes, int finger) {
-		// log.info("Tap by relative location!");
+	public void tapByTimes(IOSDriver<MobileElement> driver, int width, int height, double xtimes, double ytimes,
+			int finger) {
+		// log.info("Tap by relative main.java.location!");
 		int sX = (int) (width * xtimes);
 		int sY = (int) (height * ytimes);
 		log.info("------------------Tap X" + sX + ";Tap Y" + sY + "------------------------");
@@ -77,29 +78,36 @@ public class Common {
 	}
 
 	// 判断签到弹窗
-	public void ifExistSign(IOSDriver driver, HomePage homePage) throws InterruptedException {
-		List we = driver.findElementsById("Check in");
-		if (we.size() > 0) {
-			log.info("有签到弹窗！");
-			// int signDays=driver.findElementsById("ic_checkin_check").size();
-			homePage.signClick.click();
-			TimeUnit.SECONDS.sleep(3);
-			String day = homePage.signDay.getAttribute("name");
-			if (day.equals("Day 3") || day.equals("Day 5") || day.equals("Day 7")) {
-				homePage.signClick.click();
-				homePage.signClick.click();
-				log.info("特殊签到完成！");
-			} else {
-				homePage.signClick.click();
-				log.info("普通签到完成！");
-			}
+	public void ifExistSign(IOSDriver<MobileElement> driver, HomePage homePage) throws InterruptedException {
+		Long nowTime = System.currentTimeMillis();
+		if (signTime != null && (nowTime - signTime) / 1000 <= 86400) {
+			log.info("距离上次签到不足24小时，不判断签到弹窗");
+			return;
 		} else {
-			log.info("无签到弹窗！");
+			List we = driver.findElementsById("Check in");
+			if (we.size() > 0) {
+				log.info("有签到弹窗！");
+				// int signDays=driver.findElementsById("ic_checkin_check").size();
+				homePage.signClick.click();
+				TimeUnit.SECONDS.sleep(3);
+				String day = homePage.signDay.getAttribute("name");
+				if (day.equals("Day 3") || day.equals("Day 5") || day.equals("Day 7")) {
+					homePage.signClick.click();
+					homePage.signClick.click();
+					log.info("特殊签到完成！");
+				} else {
+					homePage.signClick.click();
+					log.info("普通签到完成！");
+				}
+			} else {
+				log.info("无签到弹窗！");
+			}
+			signTime = System.currentTimeMillis();
 		}
 	}
 
 	// 判断弹框
-	public void isAlert(IOSDriver driver) {
+	public void isAlert(IOSDriver<MobileElement> driver) {
 		if (driver.findElementsByClassName("UIAAlert").size() == 0) {
 			log.info("无弹窗");
 			return;
@@ -129,7 +137,7 @@ public class Common {
 		TimeUnit.SECONDS.sleep(3);
 		driver.findElementByIosUIAutomation("target.frontMostApp().tabBar().buttons()[3]").click();
 	}
-	
+
 	public String getRandomString(int length) { // length表示生成字符串的长度
 		String base = "abcdefghijklmnopqrstuvwxyz0123456789";
 		Random random = new Random();
@@ -140,8 +148,9 @@ public class Common {
 		}
 		return sb.toString();
 	}
-	
-	public void logOut(IOSDriver<MobileElement> driver,HomePage homePage,SettingPage settingPage,LoginPage loginPage,UserPage userPage) throws InterruptedException {
+
+	public void logOut(IOSDriver<MobileElement> driver, HomePage homePage, SettingPage settingPage, LoginPage loginPage,
+			UserPage userPage) throws InterruptedException {
 		TimeUnit.SECONDS.sleep(4);
 		// 判断签到弹窗
 		ifExistSign(driver, homePage);
@@ -153,4 +162,12 @@ public class Common {
 		TimeUnit.SECONDS.sleep(3);
 		assertNotNull(loginPage.changeLogin, "登出失败！");
 	}
+
+	public static void main(String[] args) throws InterruptedException {
+		Long l = System.currentTimeMillis();
+		TimeUnit.SECONDS.sleep(10);
+		Long n = System.currentTimeMillis();
+		System.out.println((n - l) / 1000 + " s");
+	}
+
 }

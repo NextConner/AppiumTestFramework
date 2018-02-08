@@ -12,6 +12,9 @@
 				<parameter name="unNormalPassword" value="a123456" />
 		<classes>
 		<class name="testCases.LoginTestCase" />
+		<class name="testCases.UserInfoTestCase" />
 		</classes>
+		
+	
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

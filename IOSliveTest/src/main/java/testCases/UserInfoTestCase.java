@@ -1,36 +1,28 @@
 package testCases;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
-
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.ios.IOSDriver;
+import initAppium.InitADriver;
+import location.LocUserPage;
+import pageObjects.LoginPage;
+import pageObjects.UserPage;
+import utils.Common;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import initAppium.InitADriver;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.ios.IOSDriver;
-import location.LocUserPage;
-import pageObjects.LoginPage;
-import pageObjects.UserPage;
-import utils.Common;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
-@Test
+ @Test(enabled = false)
 public class UserInfoTestCase {
 
 	IOSDriver<MobileElement> driver;
@@ -83,8 +75,8 @@ public class UserInfoTestCase {
 
 	}
 
-	@Ignore
-	@Test
+
+	 @Test(enabled = false)
 	public void testGetUserInfo() {
 		log.info("当前登录用户 ： " + userPage.userName.getAttribute("name"));
 		log.info("用户金币数 ： " + userPage.coins.findElements(By.className("UIAStaticText")).get(1).getAttribute("name"));
@@ -96,9 +88,9 @@ public class UserInfoTestCase {
 		// userPage.infoEdit.click();
 	}
 
-	@Ignore
+
 	// @Parameters({"testName"}) String testName
-	@Test
+	 @Test(enabled = false)
 	public void testEditUserName() throws InterruptedException {
 		String userName = userPage.userName.getAttribute("name").trim();
 		log.info("当前登录用户 ： " + userName);
@@ -114,8 +106,8 @@ public class UserInfoTestCase {
 		assertEquals(userPage.userName.getAttribute("name"), changeName);
 	}
 
-	@Ignore
-	@Test
+
+	 @Test(enabled = false)
 	public void testEditUserSex() {
 		int i = 0;
 		userPage.infoEdit.click();
@@ -145,9 +137,9 @@ public class UserInfoTestCase {
 
 	}
 
-	@Ignore
+
 	// int i
-	@Test
+	 @Test(enabled = false)
 	public void testEditUserBirth() throws InterruptedException {
 		int startX = 0;
 		int startY = 0;
@@ -176,8 +168,8 @@ public class UserInfoTestCase {
 		count++;
 	}
 
-	@Ignore
-	@Test
+
+	 @Test(enabled = false)
 	public void testEditUserInfo() throws InterruptedException {
 		String userName = userPage.userName.getAttribute("name").trim();
 		log.info("当前登录用户 ： " + userName);
@@ -239,8 +231,8 @@ public class UserInfoTestCase {
 		assertEquals(userPage.nowSex.getAttribute("value").trim(), sexs[i], "性别断言不匹配！");
 	}
 
-	@Ignore
-	@Test
+
+	 @Test(enabled = false)
 	public void testCoinsRecharge() throws InterruptedException {
 		String coins = userPage.coins.findElements(By.className("UIAStaticText")).get(1).getAttribute("name").trim();
 		log.info("用户金币数 ： " + coins);
@@ -256,8 +248,8 @@ public class UserInfoTestCase {
 		userPage.back.click();
 	}
 
-	@Ignore
-	@Test
+
+	 @Test(enabled = false)
 	public void testDiamondsExchange() throws InterruptedException {
 		String nowDiamonds = userPage.diamonds.findElements(By.className("UIAStaticText")).get(1).getAttribute("name")
 				.trim();
@@ -278,8 +270,8 @@ public class UserInfoTestCase {
 		driver.tap(1, p.x, p.y, 300);
 	}
 
-	@Ignore
-	@Test
+
+	 @Test(enabled = false)
 	public void testUserLevelInfo() {
 		String userLevel = userPage.level.findElements(By.className("UIAStaticText")).get(1).getAttribute("name")
 				.trim();
@@ -290,8 +282,8 @@ public class UserInfoTestCase {
 		log.info("返回用户个人信息页面");
 	}
 
-	@Ignore
-	@Test
+
+	 @Test(enabled = false)
 	public void testUserBroadcastLevel() {
 		String userBroadcastLevel = userPage.level.findElements(By.className("UIAStaticText")).get(1)
 				.getAttribute("name").trim();
@@ -313,8 +305,8 @@ public class UserInfoTestCase {
 		log.info("返回到个人信息页面！");
 	}
 
-	@Ignore
-	@Test
+
+	 @Test(enabled = false)
 	public void testContributeRank() throws InterruptedException {
 		log.info("－－－－－－－－－－－－－－－－执行滑动操作－－－－－－－－－－－－－－－－－－");
 		driver.swipe(winWidth / 2, winHeight / 2, winWidth / 2, winHeight / 4, 300);
@@ -346,7 +338,7 @@ public class UserInfoTestCase {
 		log.info("end this test case");
 	}
 
-	@Test
+	 @Test(enabled = false)
 	public void testMyBadge() throws InterruptedException {
 		userPage.myBadge.click();
 		assertNotNull(userPage.badgePageTitle, "未跳转到徽章页面！");
@@ -359,6 +351,7 @@ public class UserInfoTestCase {
 		}
 		TimeUnit.SECONDS.sleep(10);
 		// TODO 已拥有徽章的穿戴和卸下
+		
 	}
 
 	@AfterMethod

@@ -1,12 +1,12 @@
 package pageObjects;
 
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.ios.IOSDriver;
+import location.Loc;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.ios.IOSDriver;
-import location.Loc;
 
 public class SettingPage {
 

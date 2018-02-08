@@ -17,7 +17,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Volumes/未命名 2/download/java-client-4.1.2.jar"/>
-	<classpathentry kind="lib" path="/Volumes/未命名 2/download/selenium-server-standalone-3.2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/admin/Downloads/commons-logging-1.2/java-client-4.1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/admin/Downloads/commons-logging-1.2/selenium-server-standalone-3.2.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,14 +1,12 @@
 package initAppium;
 
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.ios.IOSDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.ios.IOSDriver;
 
 public class InitADriver {
 
