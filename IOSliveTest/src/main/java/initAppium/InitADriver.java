@@ -36,6 +36,7 @@ public class InitADriver {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		// WebDriverWait wait = new WebDriverWait(driver, 30);
 		return driver;
+
 	}
 
 }

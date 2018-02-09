@@ -1,0 +1,30 @@
+{
+  "caseName":"Login",
+
+  "caseDetaile":{
+      "Case 1":{
+      "CaseDescribe":"normal Login",
+      "steps":{
+          "loginButtonClick":"1",
+          "sendAccount":"123456",
+          "sendPassword":"123456",
+          "clickToLogin":"end"
+      },
+      "except":"2",
+      "actual":"2",
+      "CaseEnd":"CaseID 1"
+        },   
+    "Case 2":{
+      "CaseDescribe":"unNormaLogin",
+      "steps":{
+          "loginButtonClick":"1",
+          "sendAccount":"123456",
+          "sendPassword":"123456",
+          "clickToLogin":"end"
+      },
+      "except":"2",
+      "actual":"2",
+      "CaseEnd":"CaseID 1"
+  }   
+    }
+}
