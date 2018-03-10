@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="test" parallel="true">
+
+    <test name="test" preserver-order="true">
+        <classes>
+            <class name="testCases.DemoCase"/>
+        </classes>
+        <listeners>
+            <listener class-name="org.uncommons.reportng.HTMLReporter" /><!-- create better report by reportNG -->
+            <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+        </listeners>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->
