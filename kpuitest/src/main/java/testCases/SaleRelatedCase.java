@@ -6,18 +6,16 @@ import io.appium.java_client.android.AndroidDriver;
 import location.SaleLocation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pageObjects.LoginPage;
 import pageObjects.SalePage;
 import pageObjects.TagPage;
 import utils.Commons;
 
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.sql.Time;
-import java.util.List;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -27,6 +25,7 @@ public class SaleRelatedCase {
     public AndroidDeviceDriverInit addi;
     public TagPage ta;
     public SalePage sg;
+    public LoginPage lg;
     boolean flag = false;
     Commons common;
     Log log = LogFactory.getLog(DemoCase.class);
@@ -36,6 +35,7 @@ public class SaleRelatedCase {
         try {
             this.addi = new AndroidDeviceDriverInit();
             this.driver = addi.setUpAppium();
+            this.lg = new LoginPage(driver);
             this.ta = new TagPage(driver);
             this.common = new Commons(driver);
             this.sg = new SalePage(driver);
@@ -49,39 +49,15 @@ public class SaleRelatedCase {
         log.info("start");
     }
 
-    @Test(enabled =true)
+
+    @Test(enabled = false)
     public void testAddNewProduct() throws InterruptedException {
-        if (null == sg.shopCar) {
-            log.info("not login！");
-            flag = common.login(flag);
-        } else {
-            flag = true;
-            log.info("had login");
-        }
+
+        common.login();
         Assert.assertNotNull(sg.shopCar);
-        MobileElement mob=common.getMenuElement("R");
-        mob.click();
-//        String text = "";
-//        List<MobileElement> list = driver.findElementsByClassName(SaleLocation.ADD_SALE_CLASS);
-//        for (int i = 0; i < list.size(); i++) {
-//            //log.info(mob.getAttribute("contentDescription"));
-//            try {
-//                text = list.get(i).getAttribute("contentDescription");//find element content-desc in android
-//                log.info(text);
-//                if (text != null && text.trim().equals("right_menu")) {
-//                    log.info("find it!");
-//                    list.get(i).click();
-//                    break;
-//                } else {
-//                    continue;
-//                }
-//            } catch (StaleElementReferenceException sere) {
-//                list.get(i).click();
-//                break;
-//            }
-//        }
+        driver.findElementsByClassName(SaleLocation.ADD_SALE_CLASS).get(common.getMenuElement("R")).click();
         TimeUnit.SECONDS.sleep(2);
-        driver.pressKeyCode(4);
+        driver.pressKeyCode(4);//hide keyboard
         sg.productName.sendKeys("测试商品");
         sg.productNum.sendKeys("100");
         sg.productBrand.sendKeys("测试");
@@ -97,15 +73,21 @@ public class SaleRelatedCase {
         sg.endEditProduct.click();
         TimeUnit.SECONDS.sleep(3);
         Assert.assertNotNull(sg.shopCar);
-        MobileElement me=driver.findElementById("xyz.kptech:id/tv_product_title");
+        MobileElement me = driver.findElementById("xyz.kptech:id/tv_product_title");
         Assert.assertTrue(me.getAttribute("name").contains("测试商品"));
         log.info("add product success");
         log.info("end test");
     }
 
     @Test
-    public void createOrder(){
+    public void createOrder()throws InterruptedException {
         log.info("test create order");
+        common.login();
+        String getFirstName = sg.listProductName.getAttribute("name").split("\\s")[0];
+        //getFirstName = getFirstName.split("\\s")[0];
+        common.deletePro(sg,getFirstName);
+        log.info("delete pro");
+
     }
 
     @AfterTest
@@ -115,8 +97,13 @@ public class SaleRelatedCase {
 
     @AfterClass
     public void tearDown() {
+        //quit driver
         if (driver != null) {
             driver.quit();
+        }
+        //stop server
+        if (addi.getService().isRunning()) {
+            addi.getService().stop();
         }
     }
 }

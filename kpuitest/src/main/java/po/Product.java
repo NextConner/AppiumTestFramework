@@ -1,5 +1,7 @@
 package po;
 
+import java.util.List;
+
 /**
  * product 对应的实体类
  */
@@ -11,16 +13,16 @@ public class Product {
     String pLocation;
     String pSize;
     String[] mupltiProductSize;
-    double wholeSalePrice;
-    double salePrice;
+    String wholeSalePrice;
+    String salePrice;
     String pUnit;
-    double pCost;
+    String pCost;
     String[] pTag;
     String pNote;
 
     //constructor
 
-    public Product(String pName, String pNum, String pBrand, String pLocation, String pSize, String[] mupltiProductSize, double wholeSalePrice, double salePrice, String pUnit, double pCost, String[] pTag, String pNote) {
+    public Product(String pName, String pNum, String pBrand, String pLocation, String pSize, String[] mupltiProductSize, String wholeSalePrice, String salePrice, String pUnit, String pCost, String[] pTag, String pNote) {
         this.pName = pName;
         this.pNum = pNum;
         this.pBrand = pBrand;
@@ -36,7 +38,7 @@ public class Product {
     }
 
     //without size and tag
-    public Product(String pName, String pNum, String pBrand, String pLocation, double wholeSalePrice, double salePrice, String pUnit, double pCost) {
+    public Product(String pName, String pNum, String pBrand, String pLocation, String wholeSalePrice, String salePrice, String pUnit, String pCost) {
         this.pName = pName;
         this.pNum = pNum;
         this.pBrand = pBrand;
@@ -45,6 +47,10 @@ public class Product {
         this.salePrice = salePrice;
         this.pUnit = pUnit;
         this.pCost = pCost;
+    }
+
+    public Product(){
+
     }
 
     public String getpName() {
@@ -95,19 +101,19 @@ public class Product {
         this.mupltiProductSize = mupltiProductSize;
     }
 
-    public double getWholeSalePrice() {
+    public String getWholeSalePrice() {
         return wholeSalePrice;
     }
 
-    public void setWholeSalePrice(double wholeSalePrice) {
+    public void setWholeSalePrice(String wholeSalePrice) {
         this.wholeSalePrice = wholeSalePrice;
     }
 
-    public double getSalePrice() {
+    public String getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(double salePrice) {
+    public void setSalePrice(String salePrice) {
         this.salePrice = salePrice;
     }
 
@@ -119,11 +125,11 @@ public class Product {
         this.pUnit = pUnit;
     }
 
-    public double getpCost() {
+    public String getpCost() {
         return pCost;
     }
 
-    public void setpCost(double pCost) {
+    public void setpCost(String pCost) {
         this.pCost = pCost;
     }
 

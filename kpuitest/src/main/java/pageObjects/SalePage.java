@@ -46,15 +46,14 @@ public class SalePage {
     public WebElement productSave;
     @FindBy(id=SaleLocation.P_EDIT_BACK)
     public WebElement endEditProduct;
-
-
-
-
-
-
-
-
-
-
-
+    @FindBy(id=SaleLocation.ANY_APRODUCT_EDIT)
+    public WebElement anyProductEdit;
+    @FindBy(id=SaleLocation.ANY_PRODUCT_DEL)
+    public WebElement productDel;
+    @FindBy(id=SaleLocation.LIST_PRODUCT_NAME)
+    public WebElement listProductName;
+    @FindBy(id=SaleLocation.P_DEL_OK)
+    public WebElement proDelOk;
+    @FindBy(id=SaleLocation.P_DEL_CANCLE)
+    public WebElement proDelCancle;
 }

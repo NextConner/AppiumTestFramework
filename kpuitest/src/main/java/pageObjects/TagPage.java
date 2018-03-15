@@ -2,6 +2,8 @@ package pageObjects;
 
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+
+import location.Set;
 import location.UILocation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -27,6 +29,6 @@ public class TagPage {
     public WebElement tagName;
     @FindBy(id = UILocation.SURE_ADD)
     public WebElement sureAddTag;
-    @FindBy(id=UILocation.HOME)
+    @FindBy(id = UILocation.HOME)
     public WebElement home;
 }
