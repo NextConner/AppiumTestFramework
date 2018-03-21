@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="classes" thread-count="3">
+	<test verbose="2" preserve-order="true" name="TestDebug">
+				<parameter name="normalAccount" value="13576046405" />
+				<parameter name="normalPassword" value="123456" />
+				<parameter name="nullAccount" value="" />
+				<parameter name="nullPassword" value="" />
+				<parameter name="wrongAccount" value="1357604640" />
+				<parameter name="wrongPassword" value="1357" />
+				<parameter name="unNormalAccount" value="s13576046405" />
+				<parameter name="unNormalPassword" value="a123456" />
+		<classes>
+		<class name="testCases.LoginTestCase" />
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
