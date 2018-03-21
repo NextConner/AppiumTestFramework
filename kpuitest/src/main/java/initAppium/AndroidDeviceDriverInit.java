@@ -8,13 +8,10 @@ import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
-
 import static initAppium.DeviceConfig.*;
 
 public class AndroidDeviceDriverInit {

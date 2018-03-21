@@ -36,6 +36,7 @@ public class Commons {
     //delete product
     public void deletePro(SalePage sg, String firstProName)throws InterruptedException {
         log.info("try delete product'");
+        TimeUnit.SECONDS.sleep(2);
         String getFirstName = sg.listProductName.getAttribute("name").split("\\s")[0];//get first product name only by regex
         log.info("try to print name : " + getFirstName);
         try {

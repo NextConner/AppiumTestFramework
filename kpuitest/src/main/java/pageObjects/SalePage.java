@@ -46,7 +46,7 @@ public class SalePage {
     public WebElement productSave;
     @FindBy(id=SaleLocation.P_EDIT_BACK)
     public WebElement endEditProduct;
-    @FindBy(id=SaleLocation.ANY_APRODUCT_EDIT)
+    @FindBy(id=SaleLocation.ANY_PRODUCT_EDIT)
     public WebElement anyProductEdit;
     @FindBy(id=SaleLocation.ANY_PRODUCT_DEL)
     public WebElement productDel;
@@ -56,4 +56,18 @@ public class SalePage {
     public WebElement proDelOk;
     @FindBy(id=SaleLocation.P_DEL_CANCLE)
     public WebElement proDelCancle;
+    @FindBy(id=SaleLocation.P_PRO_LIST)
+    public WebElement proList;// contains all pro getted
+    //order pro num
+    @FindBy(id=SaleLocation.SHOP_CAR_TOTAL_NUM)
+    public WebElement shopCarTotal;
+    @FindBy(id=SaleLocation.ORDER_CHECKOUT)
+    public WebElement orderCheckout;
+    @FindBy(id=SaleLocation.ORDER)
+    public WebElement order;
+    @FindBy(id=SaleLocation.CUSTOMER_NAME)
+    public WebElement customerName;
+    @FindBy(id=SaleLocation.FIRST_ORDER_MONNEY)
+    public WebElement firstOrderPrice;
+
 }

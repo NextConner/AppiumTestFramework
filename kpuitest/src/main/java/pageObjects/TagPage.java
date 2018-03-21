@@ -8,6 +8,7 @@ import location.UILocation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.springframework.stereotype.Controller;
 
 public class TagPage {
 
@@ -31,4 +32,5 @@ public class TagPage {
     public WebElement sureAddTag;
     @FindBy(id = UILocation.HOME)
     public WebElement home;
+
 }

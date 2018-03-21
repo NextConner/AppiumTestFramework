@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Test
-public class DemoCase {
+public class SettingRelatedCase {
 
     public AndroidDriver<MobileElement> driver;
     public AndroidDeviceDriverInit addi;
     public TagPage ta;
-    Log log = LogFactory.getLog(DemoCase.class);
+    Log log = LogFactory.getLog(SettingRelatedCase.class);
 
     @BeforeClass
     public void setUp() {

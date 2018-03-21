@@ -3,7 +3,7 @@
 
     <test name="test" preserver-order="true">
         <classes>
-            <class name="testCases.DemoCase"/>
+            <class name="testCases.SettingRelatedCase"/>
         </classes>
         <listeners>
             <listener class-name="org.uncommons.reportng.HTMLReporter" /><!-- create better report by reportNG -->
